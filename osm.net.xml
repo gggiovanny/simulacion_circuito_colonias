@@ -16085,7 +16085,7 @@
         </lane>
     </edge>
 
-    <tlLogic id="cluster_287667164_831575353" type="actuated" programID="0" offset="0">
+    <tlLogic id="semaforo_circuito_colonias" type="actuated" programID="0" offset="0">
         <phase duration="39" state="GGggGGGrrrr" minDur="13" maxDur="50"/>
         <phase duration="6"  state="yyyyyyyrrrr"/>
         <phase duration="39" state="rrrrrrrGGGG" minDur="13" maxDur="50"/>
@@ -22348,9 +22348,9 @@
     <connection from="29490152#11" to="701496351#0" fromLane="1" toLane="1" via=":cluster_317228514_317228932_10_1" dir="s" state="M"/>
     <connection from="29490152#11" to="-376317851#11" fromLane="1" toLane="0" via=":cluster_317228514_317228932_12_0" dir="l" state="m"/>
     <connection from="29490152#11" to="376317859#0" fromLane="1" toLane="1" via=":cluster_317228514_317228932_13_0" dir="t" state="m"/>
-    <connection from="29490152#2" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_4_0" tl="cluster_287667164_831575353" linkIndex="4" dir="r" state="O"/>
-    <connection from="29490152#2" to="29490152#3" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_5_0" tl="cluster_287667164_831575353" linkIndex="5" dir="s" state="O"/>
-    <connection from="29490152#2" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_5_1" tl="cluster_287667164_831575353" linkIndex="6" dir="s" state="O"/>
+    <connection from="29490152#2" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_4_0" tl="semaforo_circuito_colonias" linkIndex="4" dir="r" state="O"/>
+    <connection from="29490152#2" to="29490152#3" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_5_0" tl="semaforo_circuito_colonias" linkIndex="5" dir="s" state="O"/>
+    <connection from="29490152#2" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_5_1" tl="semaforo_circuito_colonias" linkIndex="6" dir="s" state="O"/>
     <connection from="29490152#3" to="29914013#0" fromLane="0" toLane="0" via=":329662451_2_0" dir="r" state="M"/>
     <connection from="29490152#3" to="29490152#4" fromLane="0" toLane="0" via=":329662451_3_0" dir="s" state="M"/>
     <connection from="29490152#3" to="29490152#4" fromLane="1" toLane="1" via=":329662451_3_1" dir="s" state="M"/>
@@ -23243,10 +23243,10 @@
     <connection from="376317854#7" to="376317854#8" fromLane="0" toLane="0" via=":287686473_7_0" dir="s" state="M"/>
     <connection from="376317854#7" to="376317854#8" fromLane="1" toLane="1" via=":287686473_7_1" dir="s" state="M"/>
     <connection from="376317854#7" to="29450236#8" fromLane="1" toLane="0" via=":287686473_9_0" dir="l" state="M"/>
-    <connection from="376317854#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_7_0" tl="cluster_287667164_831575353" linkIndex="7" dir="r" state="o"/>
-    <connection from="376317854#8" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_8_0" tl="cluster_287667164_831575353" linkIndex="8" dir="s" state="o"/>
-    <connection from="376317854#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_8_1" tl="cluster_287667164_831575353" linkIndex="9" dir="s" state="o"/>
-    <connection from="376317854#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_10_0" tl="cluster_287667164_831575353" linkIndex="10" dir="l" state="o"/>
+    <connection from="376317854#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_7_0" tl="semaforo_circuito_colonias" linkIndex="7" dir="r" state="o"/>
+    <connection from="376317854#8" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_8_0" tl="semaforo_circuito_colonias" linkIndex="8" dir="s" state="o"/>
+    <connection from="376317854#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_8_1" tl="semaforo_circuito_colonias" linkIndex="9" dir="s" state="o"/>
+    <connection from="376317854#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_10_0" tl="semaforo_circuito_colonias" linkIndex="10" dir="l" state="o"/>
     <connection from="376317855#1" to="-29914001#0" fromLane="0" toLane="0" via=":329662499_0_0" dir="r" state="M"/>
     <connection from="376317855#1" to="376317855#2" fromLane="0" toLane="0" via=":329662499_1_0" dir="s" state="M"/>
     <connection from="376317855#1" to="376317855#2" fromLane="1" toLane="1" via=":329662499_1_1" dir="s" state="M"/>
@@ -23304,10 +23304,10 @@
     <connection from="376317859#7" to="-359878646#2" fromLane="0" toLane="0" via=":3645111789_2_0" dir="r" state="M"/>
     <connection from="376317859#7" to="376317859#8" fromLane="0" toLane="0" via=":3645111789_3_0" dir="s" state="M"/>
     <connection from="376317859#7" to="376317859#8" fromLane="1" toLane="1" via=":3645111789_3_1" dir="s" state="M"/>
-    <connection from="376317859#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_0_0" tl="cluster_287667164_831575353" linkIndex="0" dir="s" state="O"/>
-    <connection from="376317859#8" to="376317858#0" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_0_1" tl="cluster_287667164_831575353" linkIndex="1" dir="s" state="O"/>
-    <connection from="376317859#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_2_0" tl="cluster_287667164_831575353" linkIndex="2" dir="l" state="o"/>
-    <connection from="376317859#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_3_0" tl="cluster_287667164_831575353" linkIndex="3" dir="t" state="o"/>
+    <connection from="376317859#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_0_0" tl="semaforo_circuito_colonias" linkIndex="0" dir="s" state="O"/>
+    <connection from="376317859#8" to="376317858#0" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_0_1" tl="semaforo_circuito_colonias" linkIndex="1" dir="s" state="O"/>
+    <connection from="376317859#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_2_0" tl="semaforo_circuito_colonias" linkIndex="2" dir="l" state="o"/>
+    <connection from="376317859#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_3_0" tl="semaforo_circuito_colonias" linkIndex="3" dir="t" state="o"/>
     <connection from="665477223#0" to="685755225#3" fromLane="0" toLane="0" via=":324665171_8_0" dir="r" state="m"/>
     <connection from="665477223#0" to="665477223#1" fromLane="0" toLane="0" via=":324665171_9_0" dir="s" state="m"/>
     <connection from="665477223#0" to="-685755225#2" fromLane="0" toLane="0" via=":324665171_10_0" dir="l" state="m"/>
