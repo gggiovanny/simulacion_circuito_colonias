@@ -1,0 +1,13 @@
+# vs code folders
+/.vscode
+/.vscode/*
+# specific files
+detector.xml
+# python cached files
+*.pyc
+__pycache__
+# logs extensions
+*.npy
+*.csv
+# test files
+test.*
