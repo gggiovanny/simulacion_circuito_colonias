@@ -1,14 +1,20 @@
 class Edge: # o calle/arista
-    def __init__(self, is_traffic_input = False, associated_detector_name = "", num_lanes = 1, aprox_length = 0, aprox_total_width = 0, name = ""):
+    def __init__(self, is_traffic_input = False, associated_detector_name = "", num_lanes = 1, lane_names_list = [], aprox_length = 0, aprox_total_width = 0, max_speed = 0, name = "", ):
         # propiedades
         self.is_traffic_input = is_traffic_input # indica si el trafico entra por esta calle
         self.associated_detector_name = associated_detector_name # nombre del detector de trafico asociado a esta calle
         self.num_lanes = num_lanes # numero de carriles
+        self.lane_names_list = lane_names_list # nombres de los carriles para obtener datos extra de ellos, como lenght y width
+        self.name = name # nombre o apodo para la calle
+        # propiedades obtenidas de la simulacion
+        self.setSize(aprox_length, aprox_total_width)
+        self.max_speed = max_speed
+        # estado
+    
+    def setSize(self, aprox_length, aprox_total_width):
         self.aprox_length = aprox_length # largo aproximado de la calle
         self.aprox_total_width = aprox_total_width # ancho aproximado de la calle completa que incluye a todos los carriles
         self.aprox_area = aprox_length * aprox_total_width # area calculada
-        self.name = name # nombre o apodo para la calle
-        # estado
     
     def __str__(self):
         return self.name
@@ -53,31 +59,12 @@ class Intersection:
         conections_str = ', '.join(map(str, self.conections_list))
         return "[{}] controls:\n\tedges: [{}]\n\tconections: [{}]".format(self.associated_traffic_light_name, edges_str, conections_str)
 
-# class EventObserver:
-#     def __init__(self):
-
-#     def observe(self):
-
-def setup():
-    edges = {
-        "from_north": Edge(num_lanes=2, name='from_north'),
-        "to_south": Edge(num_lanes=2, name='to_south'),
-        "from_east": Edge(num_lanes=2, name='from_east'),
-        "to_west": Edge(num_lanes=2, name='to_west'),
-        "from_west": Edge(num_lanes=2, name='from_west'),
-        "to_east": Edge(num_lanes=2, name='to_east'),
-    }
-    conections = {
-        "north_to_south": Conection(edges["from_north"], edges["to_south"]),
-        "east_to_west": Conection(edges["from_east"], edges["to_west"]),
-        "west_to_east": Conection(edges["from_west"], edges["to_east"]),
-    }
-    intersection = Intersection(
-        "semaforo_circuito_colonias", 
-        edges_list=edges.values(), 
-        conections_list=conections.values()
-    )
-    print(intersection)
-
-if __name__ == "__main__":
-    setup()
+class EdgeState:
+    def __init__(self, name, timestamp, vehicle_number = 0, mean_speed = 0, vehicle_ids = 0, waiting_time = 0, occupancy = 0):
+        self.name = name
+        self.timestamp = timestamp
+        self.vehicle_number = vehicle_number # The number of vehicles on this lane within the last time step.
+        self.mean_speed = mean_speed # the mean speed of vehicles that were on this lane within the last simulation step [m/s]
+        self.vehicle_ids = vehicle_ids #list of ids of vehicles that were on the named edge in the last simulation step
+        self.waiting_time = waiting_time #  the sum of the waiting times for all vehicles on the edge
+        self.occupancy = occupancy # the percentage of time the edge was occupied by a vehicle (%)
