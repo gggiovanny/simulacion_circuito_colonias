@@ -1,0 +1,8 @@
+<additional>
+    <tlLogic id="semaforo_circuito_colonias" type="static" programID="manual" offset="0">
+        <phase duration="9999" state="GGggGGGrrrr"/>
+        <phase duration="9999" state="yyyyyyyrrrr"/>
+        <phase duration="9999" state="rrrrrrrGGGG"/>
+        <phase duration="9999" state="rrrrrrryyyy"/>
+    </tlLogic>
+</additional>

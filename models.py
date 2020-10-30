@@ -68,3 +68,5 @@ class EdgeState:
         self.vehicle_ids = vehicle_ids #list of ids of vehicles that were on the named edge in the last simulation step
         self.waiting_time = waiting_time #  the sum of the waiting times for all vehicles on the edge
         self.occupancy = occupancy # the percentage of time the edge was occupied by a vehicle (%)
+    def __str__(self):
+        return vars(self)

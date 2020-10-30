@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 10/19/20 18:25:13 by Eclipse SUMO netedit Version 1.6.0
+<!-- generated on 10/29/20 17:50:53 by Eclipse SUMO netedit Version 1.6.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
-        <sumo-net-file value="D:\Files\Desktop\circuito_colonias_super_aki\osm.net.xml"/>
+        <sumo-net-file value="D:\Files\Desktop\circuito_colonias_super_aki\data\sumo-net\osm.net.xml"/>
     </input>
 
     <output>
-        <output-file value="D:\Files\Desktop\circuito_colonias_super_aki\osm.net.xml"/>
+        <output-file value="D:\Files\Desktop\circuito_colonias_super_aki\data\sumo-net\osm.net.xml"/>
         <output.street-names value="true"/>
     </output>
 
@@ -14110,25 +14110,6 @@
         </lane>
         <param key="origTo" value="317228932"/>
     </edge>
-    <edge id="29490152#2" from="cluster_325781359_325781360" to="interseccion_circuito_colonias" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2598.18,5052.38 2751.50,5052.00">
-        <lane id="29490152#2_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.71" shape="2605.27,5050.76 2743.97,5050.42">
-            <param key="origId" value="29490152"/>
-        </lane>
-        <lane id="29490152#2_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.71" shape="2605.28,5053.96 2743.98,5053.62">
-            <param key="origId" value="29490152"/>
-        </lane>
-        <param key="origFrom" value="325781360"/>
-        <param key="origTo" value="831575353"/>
-    </edge>
-    <edge id="29490152#3" from="interseccion_circuito_colonias" to="329662451" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2751.50,5052.00 2871.11,5051.38">
-        <lane id="29490152#3_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="98.92" shape="2764.68,5050.33 2863.60,5049.82">
-            <param key="origId" value="29490152"/>
-        </lane>
-        <lane id="29490152#3_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="98.92" shape="2764.70,5053.53 2863.62,5053.02">
-            <param key="origId" value="29490152"/>
-        </lane>
-        <param key="origFrom" value="831575353"/>
-    </edge>
     <edge id="29490152#4" from="329662451" to="329662453" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center">
         <lane id="29490152#4_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="98.24" shape="2878.02,5049.77 2976.26,5049.68">
             <param key="origId" value="29490152"/>
@@ -15570,24 +15551,6 @@
         </lane>
         <param key="origFrom" value="317230293"/>
     </edge>
-    <edge id="376317854#8" from="287686473" to="interseccion_circuito_colonias" name="Calle 50" priority="11" type="highway.secondary" spreadType="center" shape="2750.18,5137.49 2755.05,5094.29 2757.84,5062.90">
-        <lane id="376317854#8_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="60.93" shape="2749.32,5130.81 2753.46,5094.13 2755.58,5070.24">
-            <param key="origId" value="376317854"/>
-        </lane>
-        <lane id="376317854#8_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="60.93" shape="2752.50,5131.16 2756.64,5094.45 2758.77,5070.52">
-            <param key="origId" value="376317854"/>
-        </lane>
-        <param key="origTo" value="287667164"/>
-    </edge>
-    <edge id="376317855#1" from="interseccion_circuito_colonias" to="329662499" name="Calle 50" priority="11" type="highway.secondary" spreadType="center" shape="2751.50,5052.00 2740.52,4942.02">
-        <lane id="376317855#1_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="95.52" shape="2749.16,5044.67 2739.67,4949.62">
-            <param key="origId" value="376317855"/>
-        </lane>
-        <lane id="376317855#1_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="95.52" shape="2752.34,5044.35 2742.86,4949.30">
-            <param key="origId" value="376317855"/>
-        </lane>
-        <param key="origFrom" value="831575353"/>
-    </edge>
     <edge id="376317855#2" from="329662499" to="329658913" name="Calle 50" priority="11" type="highway.secondary" spreadType="center">
         <lane id="376317855#2_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="56.83" shape="2738.29,4935.09 2733.18,4878.48">
             <param key="origId" value="376317855"/>
@@ -15627,16 +15590,6 @@
         <lane id="376317855#6_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="785.99" shape="2708.33,4566.82 2697.22,4443.54 2687.53,4335.87 2676.12,4218.23 2665.52,4107.79 2657.34,3996.88 2649.13,3886.06 2644.45,3783.61">
             <param key="origId" value="376317855"/>
         </lane>
-    </edge>
-    <edge id="376317858#0" from="interseccion_circuito_colonias" to="cluster_325781359_325781360" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2757.84,5062.90 2599.27,5063.53">
-        <lane id="376317858#0_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.72" shape="2744.03,5064.55 2605.30,5065.11">
-            <param key="origId" value="376317858"/>
-        </lane>
-        <lane id="376317858#0_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.72" shape="2744.02,5061.35 2605.30,5061.91">
-            <param key="origId" value="376317858"/>
-        </lane>
-        <param key="origFrom" value="287667164"/>
-        <param key="origTo" value="325781359"/>
     </edge>
     <edge id="376317858#1" from="cluster_325781359_325781360" to="325781091" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2599.27,5063.53 2484.81,5064.82">
         <lane id="376317858#1_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="99.95" shape="2592.31,5065.21 2492.36,5066.33">
@@ -15732,15 +15685,6 @@
         <lane id="376317859#7_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="36.51" shape="2845.76,5061.91 2809.25,5062.32">
             <param key="origId" value="376317859"/>
         </lane>
-    </edge>
-    <edge id="376317859#8" from="3645111789" to="interseccion_circuito_colonias" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2790.44,5064.13 2757.84,5062.90">
-        <lane id="376317859#8_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="21.11" shape="2785.77,5065.56 2764.75,5064.76">
-            <param key="origId" value="376317859"/>
-        </lane>
-        <lane id="376317859#8_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="21.11" shape="2785.89,5062.36 2764.73,5061.56">
-            <param key="origId" value="376317859"/>
-        </lane>
-        <param key="origTo" value="287667164"/>
     </edge>
     <edge id="665477223#0" from="325838062" to="324665171" name="Calle 56" priority="3" type="highway.residential">
         <lane id="665477223#0_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="13.89" length="108.85" shape="1954.02,4421.80 1963.93,4530.20">
@@ -16084,8 +16028,64 @@
             <param key="origId" value="849311993"/>
         </lane>
     </edge>
+    <edge id="from_east" from="3645111789" to="interseccion_circuito_colonias" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2790.44,5064.13 2757.84,5062.90">
+        <lane id="from_east_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="21.11" shape="2785.77,5065.56 2764.75,5064.76">
+            <param key="origId" value="376317859"/>
+        </lane>
+        <lane id="from_east_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="21.11" shape="2785.89,5062.36 2764.73,5061.56">
+            <param key="origId" value="376317859"/>
+        </lane>
+        <param key="origTo" value="287667164"/>
+    </edge>
+    <edge id="from_north" from="287686473" to="interseccion_circuito_colonias" name="Calle 50" priority="11" type="highway.secondary" spreadType="center" shape="2750.18,5137.49 2755.05,5094.29 2757.84,5062.90">
+        <lane id="from_north_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="60.93" shape="2749.32,5130.81 2753.46,5094.13 2755.58,5070.24">
+            <param key="origId" value="376317854"/>
+        </lane>
+        <lane id="from_north_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="60.93" shape="2752.50,5131.16 2756.64,5094.45 2758.77,5070.52">
+            <param key="origId" value="376317854"/>
+        </lane>
+        <param key="origTo" value="287667164"/>
+    </edge>
+    <edge id="from_west" from="cluster_325781359_325781360" to="interseccion_circuito_colonias" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2598.18,5052.38 2751.50,5052.00">
+        <lane id="from_west_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.71" shape="2605.27,5050.76 2743.97,5050.42">
+            <param key="origId" value="29490152"/>
+        </lane>
+        <lane id="from_west_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.71" shape="2605.28,5053.96 2743.98,5053.62">
+            <param key="origId" value="29490152"/>
+        </lane>
+        <param key="origFrom" value="325781360"/>
+        <param key="origTo" value="831575353"/>
+    </edge>
+    <edge id="to_east" from="interseccion_circuito_colonias" to="329662451" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2751.50,5052.00 2871.11,5051.38">
+        <lane id="to_east_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="98.92" shape="2764.68,5050.33 2863.60,5049.82">
+            <param key="origId" value="29490152"/>
+        </lane>
+        <lane id="to_east_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="98.92" shape="2764.70,5053.53 2863.62,5053.02">
+            <param key="origId" value="29490152"/>
+        </lane>
+        <param key="origFrom" value="831575353"/>
+    </edge>
+    <edge id="to_south" from="interseccion_circuito_colonias" to="329662499" name="Calle 50" priority="11" type="highway.secondary" spreadType="center" shape="2751.50,5052.00 2740.52,4942.02">
+        <lane id="to_south_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="95.52" shape="2749.16,5044.67 2739.67,4949.62">
+            <param key="origId" value="376317855"/>
+        </lane>
+        <lane id="to_south_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="95.52" shape="2752.34,5044.35 2742.86,4949.30">
+            <param key="origId" value="376317855"/>
+        </lane>
+        <param key="origFrom" value="831575353"/>
+    </edge>
+    <edge id="to_west" from="interseccion_circuito_colonias" to="cluster_325781359_325781360" name="Circuito Colonias" priority="11" type="highway.secondary" spreadType="center" shape="2757.84,5062.90 2599.27,5063.53">
+        <lane id="to_west_0" index="0" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.72" shape="2744.03,5064.55 2605.30,5065.11">
+            <param key="origId" value="376317858"/>
+        </lane>
+        <lane id="to_west_1" index="1" disallow="tram rail_urban rail rail_electric rail_fast ship" speed="27.78" length="138.72" shape="2744.02,5061.35 2605.30,5061.91">
+            <param key="origId" value="376317858"/>
+        </lane>
+        <param key="origFrom" value="287667164"/>
+        <param key="origTo" value="325781359"/>
+    </edge>
 
-    <tlLogic id="semaforo_circuito_colonias" type="actuated" programID="0" offset="0">
+    <tlLogic id="semaforo_circuito_colonias" type="actuated" programID="default" offset="0">
         <phase duration="39" state="GGggGGGrrrr" minDur="13" maxDur="50"/>
         <phase duration="6"  state="yyyyyyyrrrr"/>
         <phase duration="39" state="rrrrrrrGGGG" minDur="13" maxDur="50"/>
@@ -17873,7 +17873,7 @@
         <request index="14" response="0000000000110000" foes="0000011000111110" cont="1"/>
         <request index="15" response="0000010000100001" foes="0000010000100001" cont="1"/>
     </junction>
-    <junction id="329662451" type="priority" x="2871.11" y="5051.38" incLanes="-29914013#0_0 29490152#3_0 29490152#3_1" intLanes=":329662451_0_0 :329662451_1_0 :329662451_2_0 :329662451_3_0 :329662451_3_1" shape="2878.03,5054.57 2878.02,5048.17 2875.75,5047.67 2874.91,5047.03 2874.27,5046.15 2873.83,5045.00 2873.58,5043.61 2867.21,5044.22 2866.98,5046.43 2866.50,5047.21 2865.77,5047.76 2864.80,5048.10 2863.59,5048.22 2863.63,5054.62">
+    <junction id="329662451" type="priority" x="2871.11" y="5051.38" incLanes="-29914013#0_0 to_east_0 to_east_1" intLanes=":329662451_0_0 :329662451_1_0 :329662451_2_0 :329662451_3_0 :329662451_3_1" shape="2878.03,5054.57 2878.02,5048.17 2875.75,5047.67 2874.91,5047.03 2874.27,5046.15 2873.83,5045.00 2873.58,5043.61 2867.21,5044.22 2866.98,5046.43 2866.50,5047.21 2865.77,5047.76 2864.80,5048.10 2863.59,5048.22 2863.63,5054.62">
         <request index="0" response="11000" foes="11000" cont="0"/>
         <request index="1" response="00100" foes="00100" cont="0"/>
         <request index="2" response="00000" foes="00010" cont="0"/>
@@ -17918,7 +17918,7 @@
     <junction id="329662496" type="priority" x="2609.00" y="4536.82" incLanes="29913999_0" intLanes=":329662496_0_0" shape="2609.00,4536.82 2608.54,4533.65 2609.00,4536.82">
         <request index="0" response="0" foes="0" cont="0"/>
     </junction>
-    <junction id="329662499" type="priority" x="2740.52" y="4942.02" incLanes="376317855#1_0 376317855#1_1 -29914001#1_0 29914001#0_0" intLanes=":329662499_0_0 :329662499_1_0 :329662499_1_1 :329662499_3_0 :329662499_4_0 :329662499_5_0 :329662499_6_0 :329662499_7_0 :329662499_8_0 :329662499_9_0" shape="2738.08,4949.78 2744.45,4949.14 2744.67,4946.93 2745.15,4946.14 2745.87,4945.58 2746.84,4945.23 2748.05,4945.10 2747.95,4938.70 2745.40,4938.28 2744.47,4937.73 2743.78,4936.93 2743.31,4935.91 2743.07,4934.65 2736.69,4935.23 2736.44,4937.50 2735.93,4938.34 2735.18,4938.99 2734.18,4939.45 2732.93,4939.71 2733.69,4946.06 2735.94,4946.26 2736.77,4946.75 2737.40,4947.50 2737.84,4948.51">
+    <junction id="329662499" type="priority" x="2740.52" y="4942.02" incLanes="to_south_0 to_south_1 -29914001#1_0 29914001#0_0" intLanes=":329662499_0_0 :329662499_1_0 :329662499_1_1 :329662499_3_0 :329662499_4_0 :329662499_5_0 :329662499_6_0 :329662499_7_0 :329662499_8_0 :329662499_9_0" shape="2738.08,4949.78 2744.45,4949.14 2744.67,4946.93 2745.15,4946.14 2745.87,4945.58 2746.84,4945.23 2748.05,4945.10 2747.95,4938.70 2745.40,4938.28 2744.47,4937.73 2743.78,4936.93 2743.31,4935.91 2743.07,4934.65 2736.69,4935.23 2736.44,4937.50 2735.93,4938.34 2735.18,4938.99 2734.18,4939.45 2732.93,4939.71 2733.69,4946.06 2735.94,4946.26 2736.77,4946.75 2737.40,4947.50 2737.84,4948.51">
         <request index="0" response="0000000000" foes="1000010000" cont="0"/>
         <request index="1" response="0000000000" foes="0110110000" cont="0"/>
         <request index="2" response="0000000000" foes="0110110000" cont="0"/>
@@ -19387,7 +19387,7 @@
         <request index="14" response="0000000000110000" foes="0000011000111110" cont="1"/>
         <request index="15" response="0000010000100001" foes="0000010000100001" cont="1"/>
     </junction>
-    <junction id="cluster_325781359_325781360" type="priority" x="2598.72" y="5057.95" incLanes="376317858#0_0 376317858#0_1 29561907#6_0 29490152#1_0 29490152#1_1" intLanes=":cluster_325781359_325781360_0_0 :cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_3_0 :cluster_325781359_325781360_4_0 :cluster_325781359_325781360_5_0 :cluster_325781359_325781360_6_0 :cluster_325781359_325781360_6_1 :cluster_325781359_325781360_10_0 :cluster_325781359_325781360_11_0" shape="2598.66,5071.11 2601.83,5070.69 2601.99,5068.48 2602.44,5067.71 2603.14,5067.16 2604.10,5066.82 2605.31,5066.71 2605.26,5049.16 2601.92,5048.68 2600.68,5048.08 2599.75,5047.23 2599.11,5046.13 2598.76,5044.80 2595.59,5045.23 2595.44,5047.43 2594.99,5048.21 2594.29,5048.76 2593.34,5049.10 2592.13,5049.22 2592.33,5066.81 2595.59,5067.26 2596.79,5067.85 2597.70,5068.69 2598.32,5069.78">
+    <junction id="cluster_325781359_325781360" type="priority" x="2598.72" y="5057.95" incLanes="to_west_0 to_west_1 29561907#6_0 29490152#1_0 29490152#1_1" intLanes=":cluster_325781359_325781360_0_0 :cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_3_0 :cluster_325781359_325781360_4_0 :cluster_325781359_325781360_5_0 :cluster_325781359_325781360_6_0 :cluster_325781359_325781360_6_1 :cluster_325781359_325781360_10_0 :cluster_325781359_325781360_11_0" shape="2598.66,5071.11 2601.83,5070.69 2601.99,5068.48 2602.44,5067.71 2603.14,5067.16 2604.10,5066.82 2605.31,5066.71 2605.26,5049.16 2601.92,5048.68 2600.68,5048.08 2599.75,5047.23 2599.11,5046.13 2598.76,5044.80 2595.59,5045.23 2595.44,5047.43 2594.99,5048.21 2594.29,5048.76 2593.34,5049.10 2592.13,5049.22 2592.33,5066.81 2595.59,5067.26 2596.79,5067.85 2597.70,5068.69 2598.32,5069.78">
         <request index="0" response="0000000000" foes="0100010000" cont="0"/>
         <request index="1" response="0000000000" foes="1100110000" cont="0"/>
         <request index="2" response="0000000000" foes="1100110000" cont="0"/>
@@ -19732,7 +19732,7 @@
         <request index="14" response="0000011000110110" foes="0000011000111110" cont="0"/>
         <request index="15" response="0000010000100001" foes="0000010000100001" cont="0"/>
     </junction>
-    <junction id="interseccion_circuito_colonias" type="traffic_light" x="2754.67" y="5057.45" incLanes="376317859#8_0 376317859#8_1 29490152#2_0 29490152#2_1 376317854#8_0 376317854#8_1" intLanes=":interseccion_circuito_colonias_0_0 :interseccion_circuito_colonias_0_1 :interseccion_circuito_colonias_11_0 :interseccion_circuito_colonias_12_0 :interseccion_circuito_colonias_4_0 :interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_7_0 :interseccion_circuito_colonias_8_0 :interseccion_circuito_colonias_8_1 :interseccion_circuito_colonias_10_0" shape="2764.76,5066.36 2764.68,5048.73 2761.52,5048.62 2758.91,5048.25 2756.85,5047.62 2755.33,5046.74 2754.36,5045.59 2753.94,5044.19 2747.57,5044.83 2747.34,5047.04 2746.87,5047.82 2746.14,5048.37 2745.18,5048.71 2743.97,5048.82 2744.03,5066.15 2747.17,5066.25 2749.72,5066.57 2751.68,5067.12 2753.04,5067.89 2753.81,5068.88 2753.99,5070.10 2760.36,5070.66 2761.03,5068.21 2761.66,5067.36 2762.49,5066.77 2763.52,5066.44">
+    <junction id="interseccion_circuito_colonias" type="traffic_light" x="2754.67" y="5057.45" incLanes="from_east_0 from_east_1 from_west_0 from_west_1 from_north_0 from_north_1" intLanes=":interseccion_circuito_colonias_0_0 :interseccion_circuito_colonias_0_1 :interseccion_circuito_colonias_11_0 :interseccion_circuito_colonias_12_0 :interseccion_circuito_colonias_4_0 :interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_7_0 :interseccion_circuito_colonias_8_0 :interseccion_circuito_colonias_8_1 :interseccion_circuito_colonias_10_0" shape="2764.76,5066.36 2764.68,5048.73 2761.52,5048.62 2758.91,5048.25 2756.85,5047.62 2755.33,5046.74 2754.36,5045.59 2753.94,5044.19 2747.57,5044.83 2747.34,5047.04 2746.87,5047.82 2746.14,5048.37 2745.18,5048.71 2743.97,5048.82 2744.03,5066.15 2747.17,5066.25 2749.72,5066.57 2751.68,5067.12 2753.04,5067.89 2753.81,5068.88 2753.99,5070.10 2760.36,5070.66 2761.03,5068.21 2761.66,5067.36 2762.49,5066.77 2763.52,5066.44">
         <request index="0"  response="00000000000" foes="11110000000" cont="0"/>
         <request index="1"  response="00000000000" foes="11110000000" cont="0"/>
         <request index="2"  response="00001100000" foes="11101100000" cont="1"/>
@@ -20378,8 +20378,8 @@
     <junction id=":cluster_325780946_325780947_17_0" type="internal" x="2900.79" y="5320.63" incLanes=":cluster_325780946_325780947_7_0 28854745#4_0 28854753#9_0 29561861#3_0" intLanes=":cluster_325780946_325780947_2_0 :cluster_325780946_325780947_8_0 :cluster_325780946_325780947_13_0"/>
     <junction id=":cluster_325780946_325780947_18_0" type="internal" x="2897.05" y="5330.42" incLanes=":cluster_325780946_325780947_14_0 -29561861#5_0" intLanes=":cluster_325780946_325780947_1_0 :cluster_325780946_325780947_2_0 :cluster_325780946_325780947_3_0 :cluster_325780946_325780947_4_0 :cluster_325780946_325780947_5_0 :cluster_325780946_325780947_9_0 :cluster_325780946_325780947_10_0"/>
     <junction id=":cluster_325780946_325780947_19_0" type="internal" x="2892.87" y="5336.67" incLanes=":cluster_325780946_325780947_15_0 -29561861#5_0 28854745#4_0 28854753#9_0" intLanes=":cluster_325780946_325780947_0_0 :cluster_325780946_325780947_5_0 :cluster_325780946_325780947_10_0"/>
-    <junction id=":cluster_325781359_325781360_10_0" type="internal" x="2597.84" y="5060.36" incLanes=":cluster_325781359_325781360_8_0 376317858#0_0 376317858#0_1" intLanes=":cluster_325781359_325781360_0_0 :cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_4_0 :cluster_325781359_325781360_5_0"/>
-    <junction id=":cluster_325781359_325781360_11_0" type="internal" x="2594.64" y="5060.39" incLanes=":cluster_325781359_325781360_9_0 29561907#6_0 376317858#0_0 376317858#0_1" intLanes=":cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_5_0"/>
+    <junction id=":cluster_325781359_325781360_10_0" type="internal" x="2597.84" y="5060.36" incLanes=":cluster_325781359_325781360_8_0 to_west_0 to_west_1" intLanes=":cluster_325781359_325781360_0_0 :cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_4_0 :cluster_325781359_325781360_5_0"/>
+    <junction id=":cluster_325781359_325781360_11_0" type="internal" x="2594.64" y="5060.39" incLanes=":cluster_325781359_325781360_9_0 29561907#6_0 to_west_0 to_west_1" intLanes=":cluster_325781359_325781360_1_0 :cluster_325781359_325781360_1_1 :cluster_325781359_325781360_5_0"/>
     <junction id=":cluster_325835157_325835162_16_0" type="internal" x="3240.82" y="5504.95" incLanes=":cluster_325835157_325835162_2_0 28854753#13_0" intLanes=":cluster_325835157_325835162_5_0 :cluster_325835157_325835162_6_0 :cluster_325835157_325835162_7_0 :cluster_325835157_325835162_8_0 :cluster_325835157_325835162_9_0 :cluster_325835157_325835162_13_0 :cluster_325835157_325835162_14_0"/>
     <junction id=":cluster_325835157_325835162_17_0" type="internal" x="3245.16" y="5508.52" incLanes=":cluster_325835157_325835162_3_0 -29561996#5_0 28854753#13_0 29561996#3_0" intLanes=":cluster_325835157_325835162_4_0 :cluster_325835157_325835162_9_0 :cluster_325835157_325835162_14_0"/>
     <junction id=":cluster_325835157_325835162_18_0" type="internal" x="3234.89" y="5517.85" incLanes=":cluster_325835157_325835162_10_0 28854745#0_0" intLanes=":cluster_325835157_325835162_0_0 :cluster_325835157_325835162_1_0 :cluster_325835157_325835162_5_0 :cluster_325835157_325835162_6_0 :cluster_325835157_325835162_13_0 :cluster_325835157_325835162_14_0 :cluster_325835157_325835162_15_0"/>
@@ -20451,8 +20451,8 @@
     <junction id=":cluster_6385819472_6385819473_17_0" type="internal" x="2854.30" y="4875.64" incLanes=":cluster_6385819472_6385819473_3_0 -29914013#3_0 -681883958#0_0 29913955#5_0" intLanes=":cluster_6385819472_6385819473_4_0 :cluster_6385819472_6385819473_9_0 :cluster_6385819472_6385819473_14_0"/>
     <junction id=":cluster_6385819472_6385819473_18_0" type="internal" x="2852.71" y="4858.20" incLanes=":cluster_6385819472_6385819473_10_0 29914013#1_0" intLanes=":cluster_6385819472_6385819473_0_0 :cluster_6385819472_6385819473_1_0 :cluster_6385819472_6385819473_5_0 :cluster_6385819472_6385819473_6_0 :cluster_6385819472_6385819473_13_0 :cluster_6385819472_6385819473_14_0 :cluster_6385819472_6385819473_15_0"/>
     <junction id=":cluster_6385819472_6385819473_19_0" type="internal" x="2852.35" y="4854.21" incLanes=":cluster_6385819472_6385819473_11_0 -681883958#0_0 29913955#5_0 29914013#1_0" intLanes=":cluster_6385819472_6385819473_1_0 :cluster_6385819472_6385819473_6_0 :cluster_6385819472_6385819473_12_0"/>
-    <junction id=":interseccion_circuito_colonias_11_0" type="internal" x="2755.38" y="5055.17" incLanes=":interseccion_circuito_colonias_2_0 29490152#2_0 29490152#2_1" intLanes=":interseccion_circuito_colonias_4_0 :interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_8_0 :interseccion_circuito_colonias_8_1 :interseccion_circuito_colonias_10_0"/>
-    <junction id=":interseccion_circuito_colonias_12_0" type="internal" x="2762.31" y="5055.14" incLanes=":interseccion_circuito_colonias_3_0 29490152#2_0 29490152#2_1 376317854#8_1" intLanes=":interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_10_0"/>
+    <junction id=":interseccion_circuito_colonias_11_0" type="internal" x="2755.38" y="5055.17" incLanes=":interseccion_circuito_colonias_2_0 from_west_0 from_west_1" intLanes=":interseccion_circuito_colonias_4_0 :interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_8_0 :interseccion_circuito_colonias_8_1 :interseccion_circuito_colonias_10_0"/>
+    <junction id=":interseccion_circuito_colonias_12_0" type="internal" x="2762.31" y="5055.14" incLanes=":interseccion_circuito_colonias_3_0 from_north_1 from_west_0 from_west_1" intLanes=":interseccion_circuito_colonias_5_0 :interseccion_circuito_colonias_5_1 :interseccion_circuito_colonias_10_0"/>
 
     <connection from="-26223153#0" to="26223153#0" fromLane="0" toLane="0" via=":6231382621_0_0" dir="t" state="M"/>
     <connection from="-26223153#1" to="681867486#0" fromLane="0" toLane="0" via=":324568808_0_0" dir="r" state="M"/>
@@ -20677,7 +20677,7 @@
     <connection from="-29450236#7" to="-29450236#6" fromLane="0" toLane="0" via=":325835336_1_0" dir="s" state="m"/>
     <connection from="-29450236#7" to="29450236#7" fromLane="0" toLane="0" via=":325835336_2_0" dir="t" state="m"/>
     <connection from="-29450236#8" to="-29450236#7" fromLane="0" toLane="0" via=":287686473_0_0" dir="s" state="m"/>
-    <connection from="-29450236#8" to="376317854#8" fromLane="0" toLane="1" via=":287686473_1_0" dir="l" state="m"/>
+    <connection from="-29450236#8" to="from_north" fromLane="0" toLane="1" via=":287686473_1_0" dir="l" state="m"/>
     <connection from="-29450236#8" to="29450236#8" fromLane="0" toLane="0" via=":287686473_2_0" dir="t" state="m"/>
     <connection from="-29450236#9" to="-359878644#0" fromLane="0" toLane="0" via=":3645111785_0_0" dir="r" state="m"/>
     <connection from="-29450236#9" to="-29450236#8" fromLane="0" toLane="0" via=":3645111785_1_0" dir="s" state="m"/>
@@ -22154,7 +22154,7 @@
     <connection from="29450236#6" to="29450236#7" fromLane="0" toLane="0" via=":325835336_6_0" dir="s" state="m"/>
     <connection from="29450236#6" to="29561907#9" fromLane="0" toLane="0" via=":325835336_7_0" dir="l" state="m"/>
     <connection from="29450236#6" to="-29450236#6" fromLane="0" toLane="0" via=":325835336_8_0" dir="t" state="m"/>
-    <connection from="29450236#7" to="376317854#8" fromLane="0" toLane="0" via=":287686473_3_0" dir="r" state="m"/>
+    <connection from="29450236#7" to="from_north" fromLane="0" toLane="0" via=":287686473_3_0" dir="r" state="m"/>
     <connection from="29450236#7" to="29450236#8" fromLane="0" toLane="0" via=":287686473_4_0" dir="s" state="m"/>
     <connection from="29450236#7" to="-29450236#7" fromLane="0" toLane="0" via=":287686473_5_0" dir="t" state="m"/>
     <connection from="29450236#8" to="359878644#1" fromLane="0" toLane="0" via=":3645111785_8_0" dir="r" state="m"/>
@@ -22336,8 +22336,8 @@
     <connection from="29490152#0" to="29561940#0" fromLane="0" toLane="0" via=":325781510_2_0" dir="r" state="M"/>
     <connection from="29490152#0" to="29490152#1" fromLane="0" toLane="0" via=":325781510_3_0" dir="s" state="M"/>
     <connection from="29490152#0" to="29490152#1" fromLane="1" toLane="1" via=":325781510_3_1" dir="s" state="M"/>
-    <connection from="29490152#1" to="29490152#2" fromLane="0" toLane="0" via=":cluster_325781359_325781360_6_0" dir="s" state="M"/>
-    <connection from="29490152#1" to="29490152#2" fromLane="1" toLane="1" via=":cluster_325781359_325781360_6_1" dir="s" state="M"/>
+    <connection from="29490152#1" to="from_west" fromLane="0" toLane="0" via=":cluster_325781359_325781360_6_0" dir="s" state="M"/>
+    <connection from="29490152#1" to="from_west" fromLane="1" toLane="1" via=":cluster_325781359_325781360_6_1" dir="s" state="M"/>
     <connection from="29490152#1" to="29561907#8" fromLane="1" toLane="0" via=":cluster_325781359_325781360_8_0" dir="l" state="m"/>
     <connection from="29490152#1" to="376317858#1" fromLane="1" toLane="1" via=":cluster_325781359_325781360_9_0" dir="t" state="m"/>
     <connection from="29490152#10" to="29914005#0" fromLane="0" toLane="0" via=":329662462_2_0" dir="r" state="M"/>
@@ -22348,12 +22348,6 @@
     <connection from="29490152#11" to="701496351#0" fromLane="1" toLane="1" via=":cluster_317228514_317228932_10_1" dir="s" state="M"/>
     <connection from="29490152#11" to="-376317851#11" fromLane="1" toLane="0" via=":cluster_317228514_317228932_12_0" dir="l" state="m"/>
     <connection from="29490152#11" to="376317859#0" fromLane="1" toLane="1" via=":cluster_317228514_317228932_13_0" dir="t" state="m"/>
-    <connection from="29490152#2" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_4_0" tl="semaforo_circuito_colonias" linkIndex="4" dir="r" state="O"/>
-    <connection from="29490152#2" to="29490152#3" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_5_0" tl="semaforo_circuito_colonias" linkIndex="5" dir="s" state="O"/>
-    <connection from="29490152#2" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_5_1" tl="semaforo_circuito_colonias" linkIndex="6" dir="s" state="O"/>
-    <connection from="29490152#3" to="29914013#0" fromLane="0" toLane="0" via=":329662451_2_0" dir="r" state="M"/>
-    <connection from="29490152#3" to="29490152#4" fromLane="0" toLane="0" via=":329662451_3_0" dir="s" state="M"/>
-    <connection from="29490152#3" to="29490152#4" fromLane="1" toLane="1" via=":329662451_3_1" dir="s" state="M"/>
     <connection from="29490152#4" to="29914012#0" fromLane="0" toLane="0" via=":329662453_2_0" dir="r" state="M"/>
     <connection from="29490152#4" to="29490152#5" fromLane="0" toLane="0" via=":329662453_3_0" dir="s" state="M"/>
     <connection from="29490152#4" to="29490152#5" fromLane="1" toLane="1" via=":329662453_3_1" dir="s" state="M"/>
@@ -22471,7 +22465,7 @@
     <connection from="29561907#4" to="-29913955#3" fromLane="0" toLane="0" via=":823472955_5_0" dir="l" state="M"/>
     <connection from="29561907#5" to="29914001#0" fromLane="0" toLane="0" via=":329662429_2_0" dir="r" state="M"/>
     <connection from="29561907#5" to="29561907#6" fromLane="0" toLane="0" via=":329662429_3_0" dir="s" state="M"/>
-    <connection from="29561907#6" to="29490152#2" fromLane="0" toLane="0" via=":cluster_325781359_325781360_3_0" dir="r" state="m"/>
+    <connection from="29561907#6" to="from_west" fromLane="0" toLane="0" via=":cluster_325781359_325781360_3_0" dir="r" state="m"/>
     <connection from="29561907#6" to="29561907#8" fromLane="0" toLane="0" via=":cluster_325781359_325781360_4_0" dir="s" state="m"/>
     <connection from="29561907#6" to="376317858#1" fromLane="0" toLane="1" via=":cluster_325781359_325781360_5_0" dir="l" state="m"/>
     <connection from="29561907#8" to="29450236#7" fromLane="0" toLane="0" via=":325835336_3_0" dir="r" state="M"/>
@@ -23162,7 +23156,7 @@
     <connection from="359878646#1" to="359878646#2" fromLane="0" toLane="0" via=":3645111791_0_0" dir="s" state="M"/>
     <connection from="359878646#1" to="-359878645" fromLane="0" toLane="0" via=":3645111791_1_0" dir="l" state="m"/>
     <connection from="359878646#1" to="-359878646#1" fromLane="0" toLane="0" via=":3645111791_2_0" dir="t" state="m"/>
-    <connection from="359878646#2" to="376317859#8" fromLane="0" toLane="0" via=":3645111789_0_0" dir="s" state="m"/>
+    <connection from="359878646#2" to="from_east" fromLane="0" toLane="0" via=":3645111789_0_0" dir="s" state="m"/>
     <connection from="359878646#2" to="-359878646#2" fromLane="0" toLane="0" via=":3645111789_1_0" dir="t" state="m"/>
     <connection from="376317850#1" to="29913990#0" fromLane="0" toLane="0" via=":6226609582_6_0" dir="r" state="M"/>
     <connection from="376317850#1" to="376317850#2" fromLane="0" toLane="0" via=":6226609582_7_0" dir="s" state="M"/>
@@ -23240,17 +23234,9 @@
     <connection from="376317854#5" to="376317854#7" fromLane="1" toLane="1" via=":cluster_317230234_317230293_6_1" dir="s" state="M"/>
     <connection from="376317854#5" to="28854753#8" fromLane="1" toLane="0" via=":cluster_317230234_317230293_8_0" dir="l" state="M"/>
     <connection from="376317854#7" to="-29450236#7" fromLane="0" toLane="0" via=":287686473_6_0" dir="r" state="M"/>
-    <connection from="376317854#7" to="376317854#8" fromLane="0" toLane="0" via=":287686473_7_0" dir="s" state="M"/>
-    <connection from="376317854#7" to="376317854#8" fromLane="1" toLane="1" via=":287686473_7_1" dir="s" state="M"/>
+    <connection from="376317854#7" to="from_north" fromLane="0" toLane="0" via=":287686473_7_0" dir="s" state="M"/>
+    <connection from="376317854#7" to="from_north" fromLane="1" toLane="1" via=":287686473_7_1" dir="s" state="M"/>
     <connection from="376317854#7" to="29450236#8" fromLane="1" toLane="0" via=":287686473_9_0" dir="l" state="M"/>
-    <connection from="376317854#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_7_0" tl="semaforo_circuito_colonias" linkIndex="7" dir="r" state="o"/>
-    <connection from="376317854#8" to="376317855#1" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_8_0" tl="semaforo_circuito_colonias" linkIndex="8" dir="s" state="o"/>
-    <connection from="376317854#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_8_1" tl="semaforo_circuito_colonias" linkIndex="9" dir="s" state="o"/>
-    <connection from="376317854#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_10_0" tl="semaforo_circuito_colonias" linkIndex="10" dir="l" state="o"/>
-    <connection from="376317855#1" to="-29914001#0" fromLane="0" toLane="0" via=":329662499_0_0" dir="r" state="M"/>
-    <connection from="376317855#1" to="376317855#2" fromLane="0" toLane="0" via=":329662499_1_0" dir="s" state="M"/>
-    <connection from="376317855#1" to="376317855#2" fromLane="1" toLane="1" via=":329662499_1_1" dir="s" state="M"/>
-    <connection from="376317855#1" to="29914001#1" fromLane="1" toLane="0" via=":329662499_3_0" dir="l" state="M"/>
     <connection from="376317855#2" to="-29913955#4" fromLane="0" toLane="0" via=":329658913_0_0" dir="r" state="M"/>
     <connection from="376317855#2" to="376317855#3" fromLane="0" toLane="0" via=":329658913_1_0" dir="s" state="M"/>
     <connection from="376317855#2" to="376317855#3" fromLane="1" toLane="1" via=":329658913_1_1" dir="s" state="M"/>
@@ -23267,9 +23253,6 @@
     <connection from="376317855#5" to="376317855#6" fromLane="0" toLane="0" via=":324665039_1_0" dir="s" state="M"/>
     <connection from="376317855#5" to="376317855#6" fromLane="1" toLane="1" via=":324665039_1_1" dir="s" state="M"/>
     <connection from="376317855#5" to="29459165#9" fromLane="1" toLane="0" via=":324665039_3_0" dir="l" state="M"/>
-    <connection from="376317858#0" to="29561907#8" fromLane="0" toLane="0" via=":cluster_325781359_325781360_0_0" dir="r" state="M"/>
-    <connection from="376317858#0" to="376317858#1" fromLane="0" toLane="0" via=":cluster_325781359_325781360_1_0" dir="s" state="M"/>
-    <connection from="376317858#0" to="376317858#1" fromLane="1" toLane="1" via=":cluster_325781359_325781360_1_1" dir="s" state="M"/>
     <connection from="376317858#1" to="-685755220#3" fromLane="0" toLane="0" via=":325781091_2_0" dir="r" state="M"/>
     <connection from="376317858#1" to="376317858#2" fromLane="0" toLane="0" via=":325781091_3_0" dir="s" state="M"/>
     <connection from="376317858#1" to="376317858#2" fromLane="1" toLane="1" via=":325781091_3_1" dir="s" state="M"/>
@@ -23302,12 +23285,8 @@
     <connection from="376317859#6" to="376317859#7" fromLane="0" toLane="0" via=":3645111790_1_0" dir="s" state="M"/>
     <connection from="376317859#6" to="376317859#7" fromLane="1" toLane="1" via=":3645111790_1_1" dir="s" state="M"/>
     <connection from="376317859#7" to="-359878646#2" fromLane="0" toLane="0" via=":3645111789_2_0" dir="r" state="M"/>
-    <connection from="376317859#7" to="376317859#8" fromLane="0" toLane="0" via=":3645111789_3_0" dir="s" state="M"/>
-    <connection from="376317859#7" to="376317859#8" fromLane="1" toLane="1" via=":3645111789_3_1" dir="s" state="M"/>
-    <connection from="376317859#8" to="376317858#0" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_0_0" tl="semaforo_circuito_colonias" linkIndex="0" dir="s" state="O"/>
-    <connection from="376317859#8" to="376317858#0" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_0_1" tl="semaforo_circuito_colonias" linkIndex="1" dir="s" state="O"/>
-    <connection from="376317859#8" to="376317855#1" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_2_0" tl="semaforo_circuito_colonias" linkIndex="2" dir="l" state="o"/>
-    <connection from="376317859#8" to="29490152#3" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_3_0" tl="semaforo_circuito_colonias" linkIndex="3" dir="t" state="o"/>
+    <connection from="376317859#7" to="from_east" fromLane="0" toLane="0" via=":3645111789_3_0" dir="s" state="M"/>
+    <connection from="376317859#7" to="from_east" fromLane="1" toLane="1" via=":3645111789_3_1" dir="s" state="M"/>
     <connection from="665477223#0" to="685755225#3" fromLane="0" toLane="0" via=":324665171_8_0" dir="r" state="m"/>
     <connection from="665477223#0" to="665477223#1" fromLane="0" toLane="0" via=":324665171_9_0" dir="s" state="m"/>
     <connection from="665477223#0" to="-685755225#2" fromLane="0" toLane="0" via=":324665171_10_0" dir="l" state="m"/>
@@ -23490,6 +23469,27 @@
     <connection from="849311993#3" to="685755225#2" fromLane="0" toLane="0" via=":324665167_2_0" dir="l" state="m"/>
     <connection from="849311993#3" to="-849311993#3" fromLane="0" toLane="0" via=":324665167_3_0" dir="t" state="m"/>
     <connection from="849311993#4" to="-849311993#4" fromLane="0" toLane="0" via=":324568782_0_0" dir="t" state="M"/>
+    <connection from="from_east" to="to_west" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_0_0" tl="semaforo_circuito_colonias" linkIndex="0" dir="s" state="O"/>
+    <connection from="from_east" to="to_west" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_0_1" tl="semaforo_circuito_colonias" linkIndex="1" dir="s" state="O"/>
+    <connection from="from_east" to="to_south" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_2_0" tl="semaforo_circuito_colonias" linkIndex="2" dir="l" state="o"/>
+    <connection from="from_east" to="to_east" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_3_0" tl="semaforo_circuito_colonias" linkIndex="3" dir="t" state="o"/>
+    <connection from="from_north" to="to_west" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_7_0" tl="semaforo_circuito_colonias" linkIndex="7" dir="r" state="o"/>
+    <connection from="from_north" to="to_south" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_8_0" tl="semaforo_circuito_colonias" linkIndex="8" dir="s" state="o"/>
+    <connection from="from_north" to="to_south" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_8_1" tl="semaforo_circuito_colonias" linkIndex="9" dir="s" state="o"/>
+    <connection from="from_north" to="to_east" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_10_0" tl="semaforo_circuito_colonias" linkIndex="10" dir="l" state="o"/>
+    <connection from="from_west" to="to_south" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_4_0" tl="semaforo_circuito_colonias" linkIndex="4" dir="r" state="O"/>
+    <connection from="from_west" to="to_east" fromLane="0" toLane="0" via=":interseccion_circuito_colonias_5_0" tl="semaforo_circuito_colonias" linkIndex="5" dir="s" state="O"/>
+    <connection from="from_west" to="to_east" fromLane="1" toLane="1" via=":interseccion_circuito_colonias_5_1" tl="semaforo_circuito_colonias" linkIndex="6" dir="s" state="O"/>
+    <connection from="to_east" to="29914013#0" fromLane="0" toLane="0" via=":329662451_2_0" dir="r" state="M"/>
+    <connection from="to_east" to="29490152#4" fromLane="0" toLane="0" via=":329662451_3_0" dir="s" state="M"/>
+    <connection from="to_east" to="29490152#4" fromLane="1" toLane="1" via=":329662451_3_1" dir="s" state="M"/>
+    <connection from="to_south" to="-29914001#0" fromLane="0" toLane="0" via=":329662499_0_0" dir="r" state="M"/>
+    <connection from="to_south" to="376317855#2" fromLane="0" toLane="0" via=":329662499_1_0" dir="s" state="M"/>
+    <connection from="to_south" to="376317855#2" fromLane="1" toLane="1" via=":329662499_1_1" dir="s" state="M"/>
+    <connection from="to_south" to="29914001#1" fromLane="1" toLane="0" via=":329662499_3_0" dir="l" state="M"/>
+    <connection from="to_west" to="29561907#8" fromLane="0" toLane="0" via=":cluster_325781359_325781360_0_0" dir="r" state="M"/>
+    <connection from="to_west" to="376317858#1" fromLane="0" toLane="0" via=":cluster_325781359_325781360_1_0" dir="s" state="M"/>
+    <connection from="to_west" to="376317858#1" fromLane="1" toLane="1" via=":cluster_325781359_325781360_1_1" dir="s" state="M"/>
 
     <connection from=":2474074970_0" to="-28854642#12" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":287136257_0" to="29561841#0" fromLane="0" toLane="0" dir="t" state="M"/>
@@ -23538,14 +23538,14 @@
     <connection from=":287684801_0" to="29459077#0" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":287685205_0" to="-26265219#1" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":287686473_0" to="-29450236#7" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":287686473_1" to="376317854#8" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":287686473_1" to="from_north" fromLane="0" toLane="1" dir="l" state="M"/>
     <connection from=":287686473_2" to="29450236#8" fromLane="0" toLane="0" dir="t" state="M"/>
-    <connection from=":287686473_3" to="376317854#8" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":287686473_3" to="from_north" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":287686473_4" to="29450236#8" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":287686473_5" to="-29450236#7" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":287686473_6" to="-29450236#7" fromLane="0" toLane="0" dir="r" state="M"/>
-    <connection from=":287686473_7" to="376317854#8" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":287686473_7" to="376317854#8" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":287686473_7" to="from_north" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":287686473_7" to="from_north" fromLane="1" toLane="1" dir="s" state="M"/>
     <connection from=":287686473_9" to="29450236#8" fromLane="0" toLane="0" dir="l" state="M"/>
     <connection from=":305705856_0" to="-29490136#5" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":305707115_0" to="-27844691#1" fromLane="0" toLane="0" dir="t" state="M"/>
@@ -25783,11 +25783,11 @@
     <connection from=":3645111785_18" to="29450236#9" fromLane="0" toLane="0" dir="l" state="M"/>
     <connection from=":3645111785_15" to="-359878644#0" fromLane="0" toLane="0" via=":3645111785_19_0" dir="t" state="m"/>
     <connection from=":3645111785_19" to="-359878644#0" fromLane="0" toLane="0" dir="t" state="M"/>
-    <connection from=":3645111789_0" to="376317859#8" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":3645111789_0" to="from_east" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":3645111789_1" to="-359878646#2" fromLane="0" toLane="0" dir="t" state="M"/>
     <connection from=":3645111789_2" to="-359878646#2" fromLane="0" toLane="0" dir="r" state="M"/>
-    <connection from=":3645111789_3" to="376317859#8" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":3645111789_3" to="376317859#8" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":3645111789_3" to="from_east" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":3645111789_3" to="from_east" fromLane="1" toLane="1" dir="s" state="M"/>
     <connection from=":3645111790_0" to="359878645" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":3645111790_1" to="376317859#7" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":3645111790_1" to="376317859#7" fromLane="1" toLane="1" dir="s" state="M"/>
@@ -26846,11 +26846,11 @@
     <connection from=":cluster_325781359_325781360_0" to="29561907#8" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":cluster_325781359_325781360_1" to="376317858#1" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":cluster_325781359_325781360_1" to="376317858#1" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":cluster_325781359_325781360_3" to="29490152#2" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":cluster_325781359_325781360_3" to="from_west" fromLane="0" toLane="0" dir="r" state="M"/>
     <connection from=":cluster_325781359_325781360_4" to="29561907#8" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":cluster_325781359_325781360_5" to="376317858#1" fromLane="0" toLane="1" dir="l" state="M"/>
-    <connection from=":cluster_325781359_325781360_6" to="29490152#2" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":cluster_325781359_325781360_6" to="29490152#2" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":cluster_325781359_325781360_6" to="from_west" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":cluster_325781359_325781360_6" to="from_west" fromLane="1" toLane="1" dir="s" state="M"/>
     <connection from=":cluster_325781359_325781360_8" to="29561907#8" fromLane="0" toLane="0" via=":cluster_325781359_325781360_10_0" dir="l" state="m"/>
     <connection from=":cluster_325781359_325781360_10" to="29561907#8" fromLane="0" toLane="0" dir="l" state="M"/>
     <connection from=":cluster_325781359_325781360_9" to="376317858#1" fromLane="0" toLane="1" via=":cluster_325781359_325781360_11_0" dir="t" state="m"/>
@@ -27221,19 +27221,19 @@
     <connection from=":cluster_6385819472_6385819473_13" to="681883958#0" fromLane="0" toLane="0" dir="s" state="M"/>
     <connection from=":cluster_6385819472_6385819473_14" to="-29914013#1" fromLane="0" toLane="0" dir="l" state="M"/>
     <connection from=":cluster_6385819472_6385819473_15" to="-29913955#5" fromLane="0" toLane="0" dir="t" state="M"/>
-    <connection from=":interseccion_circuito_colonias_0" to="376317858#0" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_0" to="376317858#0" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_2" to="376317855#1" fromLane="0" toLane="1" via=":interseccion_circuito_colonias_11_0" dir="l" state="m"/>
-    <connection from=":interseccion_circuito_colonias_11" to="376317855#1" fromLane="0" toLane="1" dir="l" state="M"/>
-    <connection from=":interseccion_circuito_colonias_3" to="29490152#3" fromLane="0" toLane="1" via=":interseccion_circuito_colonias_12_0" dir="t" state="m"/>
-    <connection from=":interseccion_circuito_colonias_12" to="29490152#3" fromLane="0" toLane="1" dir="t" state="M"/>
-    <connection from=":interseccion_circuito_colonias_4" to="376317855#1" fromLane="0" toLane="0" dir="r" state="M"/>
-    <connection from=":interseccion_circuito_colonias_5" to="29490152#3" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_5" to="29490152#3" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_7" to="376317858#0" fromLane="0" toLane="0" dir="r" state="M"/>
-    <connection from=":interseccion_circuito_colonias_8" to="376317855#1" fromLane="0" toLane="0" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_8" to="376317855#1" fromLane="1" toLane="1" dir="s" state="M"/>
-    <connection from=":interseccion_circuito_colonias_10" to="29490152#3" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":interseccion_circuito_colonias_0" to="to_west" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_0" to="to_west" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_2" to="to_south" fromLane="0" toLane="1" via=":interseccion_circuito_colonias_11_0" dir="l" state="m"/>
+    <connection from=":interseccion_circuito_colonias_11" to="to_south" fromLane="0" toLane="1" dir="l" state="M"/>
+    <connection from=":interseccion_circuito_colonias_3" to="to_east" fromLane="0" toLane="1" via=":interseccion_circuito_colonias_12_0" dir="t" state="m"/>
+    <connection from=":interseccion_circuito_colonias_12" to="to_east" fromLane="0" toLane="1" dir="t" state="M"/>
+    <connection from=":interseccion_circuito_colonias_4" to="to_south" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":interseccion_circuito_colonias_5" to="to_east" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_5" to="to_east" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_7" to="to_west" fromLane="0" toLane="0" dir="r" state="M"/>
+    <connection from=":interseccion_circuito_colonias_8" to="to_south" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_8" to="to_south" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":interseccion_circuito_colonias_10" to="to_east" fromLane="0" toLane="1" dir="l" state="M"/>
 
     <roundabout nodes="324568705 324664296 324665269 325837410" edges="29566976#1 679261828 679261830#1 679261833"/>
 
