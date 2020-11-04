@@ -71,3 +71,15 @@ class EdgeState:
         self.occupancy = occupancy # the percentage of time the edge was occupied by a vehicle (%)
     def __str__(self):
         return str(self.__dict__)
+    
+def generateEdgeStateWithTraci(traci, edge_name, timestamp):
+    return EdgeState(
+        edge_name,
+        timestamp,
+        vehicle_number=traci.edge.getLastStepVehicleNumber(edge_name),
+        mean_speed=traci.edge.getLastStepMeanSpeed(edge_name),
+        vehicle_ids=traci.edge.getLastStepVehicleIDs(edge_name),
+        waiting_time=traci.edge.getWaitingTime(edge_name),
+        occupancy=traci.edge.getLastStepOccupancy(edge_name)
+    )
+        

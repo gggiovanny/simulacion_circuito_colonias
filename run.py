@@ -37,14 +37,9 @@ def run():
     # Ejecuta el bucle de control de TraCI
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
+        # TODO: volver esto un foreach recorriendo todas las calles
+        edge_state = m.generateEdgeStateWithTraci(traci, "from_north", t)
         
-        edge_state = EdgeState("from_north", t)
-        edge_state.vehicle_number = traci.edge.getLastStepVehicleNumber(edge_state.name)
-        edge_state.mean_speed = traci.edge.getLastStepMeanSpeed(edge_state.name)
-        edge_state.vehicle_ids = traci.edge.getLastStepVehicleIDs(edge_state.name)
-        edge_state.waiting_time = traci.edge.getWaitingTime(edge_state.name)
-        edge_state.occupancy = traci.edge.getLastStepOccupancy(edge_state.name)
-        print(edge_state)
         
         
         t+=1
