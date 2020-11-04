@@ -1,11 +1,12 @@
 class Edge: # o calle/arista
-    def __init__(self, is_traffic_input = False, associated_detector_name = "", num_lanes = 1, lane_names_list = [], aprox_length = 0, aprox_total_width = 0, max_speed = 0, name = "", ):
+    def __init__(self, is_traffic_input = False, associated_detector_name = "", num_lanes = 1, lane_names_list = [], aprox_length = 0, aprox_total_width = 0, max_speed = 0, name = "", street_name=""):
         # propiedades
         self.is_traffic_input = is_traffic_input # indica si el trafico entra por esta calle
         self.associated_detector_name = associated_detector_name # nombre del detector de trafico asociado a esta calle
         self.num_lanes = num_lanes # numero de carriles
         self.lane_names_list = lane_names_list # nombres de los carriles para obtener datos extra de ellos, como lenght y width
         self.name = name # nombre o apodo para la calle
+        self.street_name = street_name # nombre real de la calle
         # propiedades obtenidas de la simulacion
         self.setSize(aprox_length, aprox_total_width)
         self.max_speed = max_speed
@@ -69,4 +70,4 @@ class EdgeState:
         self.waiting_time = waiting_time #  the sum of the waiting times for all vehicles on the edge
         self.occupancy = occupancy # the percentage of time the edge was occupied by a vehicle (%)
     def __str__(self):
-        return vars(self)
+        return str(self.__dict__)
