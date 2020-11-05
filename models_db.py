@@ -119,6 +119,14 @@ def populateIntersectionUsingTraci(intersection, traci):
         edge.num_lanes = traci.edge.getLaneNumber(edge.name)
         edge.street_name = traci.edge.getStreetName(edge.name)
 
+@db_session
+def autoGenerateState(intersection, traci, timestamp, label):
+    intersection_refreshed = getIntersection(intersection.name)
+    for edge in intersection_refreshed.edges:
+        generateEdgeStateWithTraci(traci, edge.name, timestamp, label)
+        
+
+
 # de manera dinaminca, si no existe la interseccion de circuito colonias, crearla
 if not existsIntersection("circuito_colonias"):
     create_cinco_colonias_intersection()

@@ -48,10 +48,9 @@ def run():
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
         net.nextStep()
-        # TODO: volver esto un foreach recorriendo todas las calles
-        edge_state = m.generateEdgeStateWithTraci(traci, "from_north", t, "normal traffic static rule 25x5")
         
-        
+        # recorriendo todas las calles y generando el estado de cada una
+        m.autoGenerateState(intersection, traci, t, "normal traffic static rule 25x5")
         
         t+=1
     traci.close()
