@@ -61,7 +61,7 @@ class Intersection:
         return "[{}] controls:\n\tedges: [{}]\n\tconections: [{}]".format(self.associated_traffic_light_name, edges_str, conections_str)
 
 class EdgeState:
-    def __init__(self, name, timestamp, vehicle_number = 0, mean_speed = 0, vehicle_ids = 0, waiting_time = 0, occupancy = 0):
+    def __init__(self, name, timestamp, vehicle_number = 0, mean_speed = 0, vehicle_ids = 0, waiting_time = 0, occupancy = 0, state_label=""):
         self.name = name
         self.timestamp = timestamp
         self.vehicle_number = vehicle_number # The number of vehicles on this lane within the last time step.
@@ -69,10 +69,11 @@ class EdgeState:
         self.vehicle_ids = vehicle_ids #list of ids of vehicles that were on the named edge in the last simulation step
         self.waiting_time = waiting_time #  the sum of the waiting times for all vehicles on the edge
         self.occupancy = occupancy # the percentage of time the edge was occupied by a vehicle (%)
+        self.state_label = state_label
     def __str__(self):
         return str(self.__dict__)
     
-def generateEdgeStateWithTraci(traci, edge_name, timestamp):
+def generateEdgeStateWithTraci(traci, edge_name, timestamp, state_label):
     return EdgeState(
         edge_name,
         timestamp,
@@ -80,6 +81,7 @@ def generateEdgeStateWithTraci(traci, edge_name, timestamp):
         mean_speed=traci.edge.getLastStepMeanSpeed(edge_name),
         vehicle_ids=traci.edge.getLastStepVehicleIDs(edge_name),
         waiting_time=traci.edge.getWaitingTime(edge_name),
-        occupancy=traci.edge.getLastStepOccupancy(edge_name)
+        occupancy=traci.edge.getLastStepOccupancy(edge_name),
+        state_label=state_label
     )
         
