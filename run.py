@@ -1,29 +1,8 @@
 from config import traci
 import config
 import PetriPy as p
-import models as m
-from models import EdgeState
+import models_db as m
 
-def get_cinco_colonias_intersection():
-    edges = {
-        "from_north": m.Edge(name='from_north'),
-        "to_south": m.Edge(name='to_south'),
-        "from_east": m.Edge(name='from_east'),
-        "to_west": m.Edge(name='to_west'),
-        "from_west": m.Edge(name='from_west'),
-        "to_east": m.Edge(name='to_east'),
-    }
-    conections = {
-        "north_to_south": m.Conection(edges["from_north"], edges["to_south"]),
-        "east_to_west": m.Conection(edges["from_east"], edges["to_west"]),
-        "west_to_east": m.Conection(edges["from_west"], edges["to_east"]),
-    }
-    return m.Intersection(
-        "semaforo_circuito_colonias", 
-        edges_list=list(edges.values()), 
-        conections_list=list(conections.values())
-    )
-    
 def generateTlsPetriNet(tls_name):
     # generando una lista de objetos Places() (Lugares) en una lista llamada 'places'
     places = p.generatePlaces(range(4))
@@ -53,18 +32,18 @@ def generateTlsPetriNet(tls_name):
     return p.Network(places, transition, initial_state, 6)
 
 def run():
-    # obteniendo la clase de la interseccion
-    intersection = get_cinco_colonias_intersection()
+    # obteniendo los datos de la interseccion del cache 
+    # TODO intersection = get_cinco_colonias_intersection()
     # obteniendo la red de petri que controla los semaforos
-    net = generateTlsPetriNet(intersection.associated_traffic_light_name)
+    net = generateTlsPetriNet("semaforo_circuito_colonias") # TODO: sacar nombre de la interseccion del cache
     
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     
-    # obteniendo alguanas propiedades desde la simulacion
-    for edge in intersection.edges_list:
-        edge.num_lanes = traci.edge.getLaneNumber(edge.name)
-        edge.street_name = traci.edge.getStreetName(edge.name)
+    # # obteniendo alguanas propiedades desde la simulacion
+    # for edge in intersection.edges_list:
+    #     edge.num_lanes = traci.edge.getLaneNumber(edge.name)
+    #     edge.street_name = traci.edge.getStreetName(edge.name)
     
     t = 0
     # Ejecuta el bucle de control de TraCI
