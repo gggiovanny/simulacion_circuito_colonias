@@ -1,6 +1,9 @@
 from pony.orm import *
-
+from traci import connection
+# creando el objeto de la base de datos
 db = Database()
+
+# definiendo modelos de objetos ...
 
 class Edge(db.Entity): # o calle/arista
     # propiedades
@@ -22,8 +25,6 @@ class Edge(db.Entity): # o calle/arista
     
     def getRepresentation(self):
         return "{} -> {}".format(self.from_edge.name, self.to_edge.name)
-
-
 class Conection(db.Entity):
     # propiedades
     intersection = Optional(lambda:Intersection) #  relaciona que una Intersection puede tener varias Conections
@@ -33,17 +34,27 @@ class Conection(db.Entity):
     def autoSetTraficInputs(self):
         self.from_edge.is_traffic_input = True 
         self.to_edge.is_traffic_input = False
-
 class Intersection(db.Entity):
     # propiedades
+    name = Required(str)
     associated_traffic_light_name = Required(str) # el nombre del semáforo asociado a la interseccion
     conections = Set(Conection) # lista de todas las conexiones entre calles
+    
+    @property
+    def edges(self):
+        return self.getEdges()
+    
+    def getEdges(self):
+        edges_list = []
+        for con in self.conections:
+            edges_list.append(con.from_edge)
+            edges_list.append(con.to_edge)
+        return edges_list
     
     def getRepresentation(self):
         edges_str = ', '.join(map(str, self.edges_list))
         conections_str = ', '.join(map(str, self.conections_list))
         return "[{}] controls:\n\tedges: [{}]\n\tconections: [{}]".format(self.associated_traffic_light_name, edges_str, conections_str)
-
 class EdgeState(db.Entity):
     name = Required(str)
     timestamp = Required(int)
@@ -53,10 +64,14 @@ class EdgeState(db.Entity):
     occupancy = Optional(float) # the percentage of time the edge was occupied by a vehicle (%)
     state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
 
-# conectando
-db.bind(provider='sqlite', filename='cache.sqlite', create_db=True)
+# conectando a la base de datos
+db.bind(provider='sqlite', filename='cache.sqlite', create_db=True) # file database
+# db.bind(provider='sqlite', filename=':memory:') # in memory database
+# mapeando modelos a la base de datos
 db.generate_mapping(create_tables=True)
 
+
+# haciando funciones de insersion y consulta
 @db_session
 def create_cinco_colonias_intersection():
     edges = {
@@ -72,6 +87,7 @@ def create_cinco_colonias_intersection():
     conections.append(Conection(from_edge=edges["from_east"], to_edge=edges["to_west"]))
     conections.append(Conection(from_edge=edges["from_west"], to_edge=edges["to_east"]))
     cinco_col = Intersection(
+        name="circuito_colonias",
         associated_traffic_light_name="semaforo_circuito_colonias", 
         conections=conections
     )
@@ -87,7 +103,23 @@ def generateEdgeStateWithTraci(traci, edge_name, timestamp, state_label):
         occupancy=traci.edge.getLastStepOccupancy(edge_name),
         state_label=state_label
 )
+    
+@db_session
+def getIntersection(name):
+    return Intersection.get(name=name)
 
-if __name__ == "__main__":
+@db_session
+def existsIntersection(name):
+    return Intersection.exists(name=name)
+
+@db_session
+def populateIntersectionUsingTraci(intersection, traci):
+    intersection_refreshed = getIntersection(intersection.name)
+    for edge in intersection_refreshed.edges:
+        edge.num_lanes = traci.edge.getLaneNumber(edge.name)
+        edge.street_name = traci.edge.getStreetName(edge.name)
+
+# de manera dinaminca, si no existe la interseccion de circuito colonias, crearla
+if not existsIntersection("circuito_colonias"):
     create_cinco_colonias_intersection()
 

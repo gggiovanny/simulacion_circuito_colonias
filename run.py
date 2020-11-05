@@ -33,17 +33,15 @@ def generateTlsPetriNet(tls_name):
 
 def run():
     # obteniendo los datos de la interseccion del cache 
-    # TODO intersection = get_cinco_colonias_intersection()
+    intersection = m.getIntersection("circuito_colonias")
     # obteniendo la red de petri que controla los semaforos
-    net = generateTlsPetriNet("semaforo_circuito_colonias") # TODO: sacar nombre de la interseccion del cache
+    net = generateTlsPetriNet(intersection.associated_traffic_light_name)
     
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     
     # # obteniendo alguanas propiedades desde la simulacion
-    # for edge in intersection.edges_list:
-    #     edge.num_lanes = traci.edge.getLaneNumber(edge.name)
-    #     edge.street_name = traci.edge.getStreetName(edge.name)
+    m.populateIntersectionUsingTraci(intersection, traci)
     
     t = 0
     # Ejecuta el bucle de control de TraCI
