@@ -13,3 +13,4 @@ __pycache__
 test.*
 /.history
 *.sqlite
+/__pycache__
