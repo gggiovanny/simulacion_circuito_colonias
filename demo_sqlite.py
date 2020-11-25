@@ -1,13 +1,13 @@
 from config import traci
 import config
 import models_db as m
-import petri_nets as nets
+import petri_nets as pn
 
 def run():
     # obteniendo los datos de la interseccion del cache 
     intersection = m.getIntersection("circuito_colonias")
     # obteniendo la red de petri que controla los semaforos
-    net = nets.generateDemoTlsPetriNet(intersection.associated_traffic_light_name)
+    net = pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name)
     
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])

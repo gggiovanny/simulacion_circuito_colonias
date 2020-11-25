@@ -1,7 +1,7 @@
 from config import traci
 import config
 import models_db as m
-import petri_nets as nets
+import petri_nets as pn
 
 def run():
     # conectando a la base de datos
@@ -9,9 +9,11 @@ def run():
     # obteniendo los datos de la interseccion del cache 
     intersection = m.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos
-    net1 = nets.generateDualPetriNet(intersection.associated_traffic_light_name)
-    net2 = nets.generateDemoTlsPetriNet(intersection.associated_traffic_light_name)
-    
+    nets = [
+        pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name),
+        pn.generateDualPetriNet(intersection.associated_traffic_light_name),
+        pn.generateDualPetriNet(intersection.associated_traffic_light_name, "Dual alt net", states_set="alt")
+    ]
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     
@@ -28,32 +30,46 @@ def run():
         # avanzando la simulacion
         traci.simulationStep()
         if t < 120:
-            net1.active = True
-            net2.active = False
-            net1.nextStep(t)
+            setActiveNet(0, nets)
+            nets[0].nextStep(t)
         elif t < 120*2:
-            net2.active = True
-            net1.active = False
-            net2.nextStep(t)
-        # else:
+            setActiveNet(1, nets)
+            nets[1].nextStep(t)
+        else:
+            setActiveNet(2, nets)
+            nets[2].nextStep(t)
         t+=1
         wait+=1
         estado_actual = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
         if estado_actual != estado_anterior:
-            stateChangeMsg(t, wait, estado_actual, estado_anterior, net1.name if net1.active else net2.name)
+            stateChangeMsg(t, wait, estado_actual, estado_anterior, getActiveNetName(nets))
             wait = 0
     traci.close()
 
 def stateChangeMsg(t, wait, estado_actual, estado_anterior, active_net_name):
     print("\t[!]Estado cambiado: {}->{} [t={}, w={}] ({} duró {}s, lo  efectuó {})".format(
-        nets.getStateLabel(state=estado_anterior), 
-        nets.getStateLabel(state=estado_actual), 
+        pn.getStateLabel(state=estado_anterior), 
+        pn.getStateLabel(state=estado_actual), 
         t, 
         wait, 
-        nets.getStateLabel(state=estado_anterior), 
+        pn.getStateLabel(state=estado_anterior), 
         wait,
         active_net_name
     ))
+    
+def setActiveNet(net_index, nets):
+    for i, net in enumerate(nets, start=0):
+        if i==net_index:
+            net.active = True
+        else:
+            net.active = False
+
+def getActiveNetName(nets):
+    for net in nets:
+        if net.active:
+            return net.name
+    # si no retorno nada, no hay net activa
+    return "Warning: Sin red activa."
 
 # este es el punto de entrada al script
 if __name__ == "__main__":

@@ -29,7 +29,7 @@ def generateDemoTlsPetriNet(tls_name):
     initial_state = [1,0,0,0]
     return petri.Network(places, transition, initial_state, name="Basic net")
 
-def generateDualPetriNet(tls_name):
+def generateDualPetriNet(tls_name, name="Dual net", states_set="default"):
     NET_LENGTH = 5
     # generando una lista de objetos Places() (Lugares) en una lista llamada 'places'
     p = petri.generatePlaces(range(NET_LENGTH))
@@ -56,12 +56,19 @@ def generateDualPetriNet(tls_name):
     # agregando marks extra
     p[4].required_marks = 2
     # agregando callbacks en cada transición para que ejecuten un cambio de luces
-    t[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default yellow")) # yellow
-    t[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default red")) # red
-    t[4].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default green")) # green
+    if states_set == "default":
+        t[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default yellow")) # yellow
+        t[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default red")) # red
+        t[4].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default green")) # green
+    elif states_set == "alt":
+        t[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="alt yellow")) # yellow
+        t[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="alt red")) # red
+        t[4].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="alt green")) # green
+    else:
+        raise Exception("Unknow state_set:{}".format(states_set))
     # el estado inicial de las marcas
     initial_state = [1,0,0,0,0]
-    return petri.Network(p, t, initial_state, name="Dual net")
+    return petri.Network(p, t, initial_state, name=name)
 
 label_colors = {
     "demo state 1": "GGggGGGrrrr",
