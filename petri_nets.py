@@ -21,13 +21,13 @@ def generateDemoTlsPetriNet(tls_name):
     transition[3].wait_time = 30
     transition[0].wait_time = 6
     # agregando callbacks en cada transición para que ejecuten un cambio de luces
-    transition[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, "GGggGGGrrrr")
-    transition[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, "yyyyyyyrrrr")
-    transition[2].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, "rrrrrrrGGGG")
-    transition[3].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, "rrrrrrryyyy")
+    transition[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="demo state 1"))
+    transition[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="demo state 2"))
+    transition[2].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="demo state 3"))
+    transition[3].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="demo state 4"))
     # el estado inicial de las marcas
     initial_state = [1,0,0,0]
-    return petri.Network(places, transition, initial_state, name="Basic demo net")
+    return petri.Network(places, transition, initial_state, name="Basic net")
 
 def generateDualPetriNet(tls_name):
     NET_LENGTH = 5
@@ -56,25 +56,34 @@ def generateDualPetriNet(tls_name):
     # agregando marks extra
     p[4].required_marks = 2
     # agregando callbacks en cada transición para que ejecuten un cambio de luces
-    t[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="yellow")) # yellow
-    t[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="red")) # red
-    t[4].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="green")) # green
+    t[0].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default yellow")) # yellow
+    t[1].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default red")) # red
+    t[4].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="default green")) # green
     # el estado inicial de las marcas
     initial_state = [1,0,0,0,0]
     return petri.Network(p, t, initial_state, name="Dual net")
 
+label_colors = {
+    "demo state 1": "GGggGGGrrrr",
+    "demo state 2": "yyyyyyyrrrr",
+    "demo state 3": "rrrrrrrGGGG",
+    "demo state 4": "rrrrrrryyyy",
+    "default green": "GGggGGGrrrr",
+    "default yellow": "yyyyyyyGGGG",
+    "default red": "rrrrrrryyyy",
+    "alt green": "rrGGGrrGGGG",
+    "alt yellow": "rryyyrryyyy",
+    "alt red": "GGrrrGGrrrr"
+}
+
+
 def getStateLabel(state="", label=""):
-    if state:
-        if state == "yyyyyyyGGGG":
-            return "yellow"
-        elif state == "rrrrrrryyyy":
-            return "red"
-        elif state == "GGggGGGrrrr":
-            return "green"
-    elif label:
-        if label == "yellow":
-            return "yyyyyyyGGGG"
-        elif label == "red":
-            return "rrrrrrryyyy"
-        elif label == "green":
-            return "GGggGGGrrrr"
+    if label:
+        return label_colors[label]
+    elif state:
+        label_list = [label for label,color_state in label_colors.items() if color_state == state]
+        if label_list:
+            return label_list[0] 
+        else:
+            raise ValueError("No se encontro el state={}".format(state)) 
+        

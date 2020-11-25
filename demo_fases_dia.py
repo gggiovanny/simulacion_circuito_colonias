@@ -4,6 +4,8 @@ import models_db as m
 import petri_nets as nets
 
 def run():
+    # conectando a la base de datos
+    m.connect(True)
     # obteniendo los datos de la interseccion del cache 
     intersection = m.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos

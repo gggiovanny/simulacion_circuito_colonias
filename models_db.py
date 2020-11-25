@@ -64,11 +64,18 @@ class EdgeState(db.Entity):
     occupancy = Optional(float) # the percentage of time the edge was occupied by a vehicle (%)
     state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
 
-# conectando a la base de datos
-db.bind(provider='sqlite', filename='cache.sqlite', create_db=True) # file database
-# db.bind(provider='sqlite', filename=':memory:') # in memory database
-# mapeando modelos a la base de datos
-db.generate_mapping(create_tables=True)
+
+def connect(in_memory_database = True):
+    # conectando a la base de datos
+    if in_memory_database:
+        db.bind(provider='sqlite', filename=':memory:') # in memory database
+    else:
+        db.bind(provider='sqlite', filename='cache.sqlite', create_db=True) # file database
+    # mapeando modelos a la base de datos
+    db.generate_mapping(create_tables=True)
+    # de manera dinaminca, si no existe la interseccion de circuito colonias, crearla
+    if not existsIntersection("circuito_colonias"):
+        create_cinco_colonias_intersection()
 
 
 # haciando funciones de insersion y consulta
@@ -125,9 +132,3 @@ def autoGenerateState(intersection, traci, timestamp, label):
     for edge in intersection_refreshed.edges:
         generateEdgeStateWithTraci(traci, edge.name, timestamp, label)
         
-
-
-# de manera dinaminca, si no existe la interseccion de circuito colonias, crearla
-if not existsIntersection("circuito_colonias"):
-    create_cinco_colonias_intersection()
-
