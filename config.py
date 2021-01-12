@@ -15,3 +15,14 @@ base_path = os.path.dirname(os.path.realpath(__file__)) + os.sep
 sumo_data_path = os.path.join(base_path, 'data', 'sumo-net') + os.sep
 logs_path = os.path.join(base_path, "logs") + os.sep
 semaforo = 'semaforo_circuito_colonias'
+
+def testLaunch(end_time = 50):
+    # iniciando la simulacion
+    traci.start(['sumo-gui', "-c", sumo_data_path+'osm.sumocfg'])
+    t = 0
+    # Ejecuta el bucle de control de TraCI
+    while traci.simulation.getMinExpectedNumber() > 0 and t <= end_time:
+        traci.simulationStep()
+        # recorriendo todas las calles y generando el estado de cada una
+        t+=1
+    traci.close()

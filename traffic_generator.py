@@ -1,8 +1,33 @@
 import lxml.etree as et
 import re
+from seaborn.utils import sig_stars
 import config
+import random
 
-# es importante que el
+class TrafficGenerator:
+    sumo_data_path = config.sumo_data_path
+    sumocfg_filename = 'osm.sumocfg'
+    traffic_filename = "generated_traffic.rou.xml"
+    
+    def __init__(self, from_edge_name, to_edge_name):
+        self.from_edge_name = from_edge_name
+        self.to_edge_name = to_edge_name
+        setTrafficFileInXML(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename)
+    
+    def generate(self, probability_list):
+        random.seed(42)  # Hace que la prueba sea reproducible
+        route_name = self.from_edge_name + self.to_edge_name
+        with open(self.sumo_data_path+self.traffic_filename, "w") as routes:
+            print("""<routes>
+    <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>
+    <route id="{0}" edges="{1} {2}" />""".format(route_name, self.from_edge_name, self.to_edge_name), file=routes)
+            coches_contador = 0
+            for i, prob in enumerate(probability_list):
+                if random.uniform(0, 1) < prob:
+                    print('    <vehicle id="xd_{0}" type="coche_normal" route="{1}" depart="{2}" color="1,1,0" />'.format(coches_contador, route_name, i), file=routes)
+                    coches_contador += 1
+            print("</routes>", file=routes)
+
 def setTrafficFileInXML(sumocfg_filepath, trafic_filename):
     # leyendo el archivo sumocfg especificado
     xmltree = et.parse(sumocfg_filepath)
@@ -11,14 +36,15 @@ def setTrafficFileInXML(sumocfg_filepath, trafic_filename):
     # buscando la ruta route-files
     routefiles = xmltree.xpath('//input/route-files');
     if len(routefiles) < 1:
-        raise Exception("No se encontró el nodo route-files")
+        #TODO: aqui seria bueno agregar de manera inteligente el nodo route-files cuando no exista
+        raise Exception("No se encontró el nodo route-files") 
     # obteniendo el valor que tiene actualmente
     prev_val = routefiles[0].get('value')
     
     # si existe valor previo, sustituir el que tenga la extensión .rou.xml por
     # el nuevo trafic_filename, si no, poner el nuevo trafic_filename tal cual
     if(prev_val):
-        new_val = re.sub('[a-z]*\.rou\.xml', trafic_filename, prev_val)
+        new_val = re.sub('[\w\.]*\.trips\.xml', trafic_filename, prev_val)
     else:
         new_val = trafic_filename
     
@@ -29,46 +55,11 @@ def setTrafficFileInXML(sumocfg_filepath, trafic_filename):
     # retornando el valor previo por si se desea almacenarlo
     return prev_val
 
-
-def generar_archivo_vehiculos():
-    random.seed(42)  # Hace que la prueba sea reproducible
-    N = 3600  # numero de time steps (segundos de la simulacion)
-    # demanda por segundo desde las diferentes direcciones
-    probabilidad_coche_desde_izquierda = 1. / 10
-    probabilidad_ambulancia_desde_izquierda =  1. / 100
-    probabilidad_coche_desde_abajo = 1. / 50
-    probabilidad_ambulancia_desde_abajo = 0
-    with open(sumo_data_path+"vehiculos.rou.xml", "w") as routes:
-        print("""<routes>
-        <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>
-    <vType id="emergencia" length="5" color="1,0,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="emergency"/>
-    <route id="de_izquierda_a_derecha" edges="izquierda_a_derecha_inicio izquierda_a_derecha_fin" />
-    <route id="de_abajo_a_arriba" edges="abajo_a_arriba_inicio abajo_a_arriba_fin" />
-    """, file=routes)
-        coches_contador = 0
-        for i in range(N):
-            if random.uniform(0, 1) < probabilidad_coche_desde_izquierda:
-                print('    <vehicle id="izq_%i" type="coche_normal" route="de_izquierda_a_derecha" depart="%i" color="1,1,0" />' % (
-                    coches_contador, i), file=routes)
-                coches_contador += 1
-            if random.uniform(0, 1) < probabilidad_ambulancia_desde_izquierda:
-                print('    <vehicle id="izq_ambulancia_%i" type="emergencia" route="de_izquierda_a_derecha" depart="%i" color="1,0,0" />' % (
-                    coches_contador, i), file=routes)
-                coches_contador += 1
-            if random.uniform(0, 1) < probabilidad_coche_desde_abajo:
-                print('    <vehicle id="abajo_%i" type="coche_normal" route="de_abajo_a_arriba" depart="%i" color="1,1,0" />' % (
-                    coches_contador, i), file=routes)
-                coches_contador += 1
-            if random.uniform(0, 1) < probabilidad_ambulancia_desde_abajo:
-                print('    <vehicle id="abajo_ambulancia_%i" type="emergencia" route="de_abajo_a_arriba" depart="%i" color="1,0,0" />' % (
-                    coches_contador, i), file=routes)
-                coches_contador += 1
-            
-        print("</routes>", file=routes)
-        
-        
 if __name__ == "__main__":
-    # ejecutando la funcion que controla a la simulacion
-    sumocfg_filepath = config.sumo_data_path + 'osm.sumocfg'
-    trafic_filename = 'prueba_vehiculos.rou.xml'
-    setTrafficFileInXML(sumocfg_filepath, trafic_filename)
+    from scipy.stats import norm
+    # generate random numbers from N(0,1)
+    data_normal = norm.rvs(size=3600,loc=0,scale=0.2)
+    print(data_normal)
+    generator = TrafficGenerator("from_north", "to_south")
+    generator.generate(data_normal)
+    config.testLaunch()
