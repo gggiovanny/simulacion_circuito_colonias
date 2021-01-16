@@ -8,23 +8,26 @@ class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
     sumocfg_filename = 'osm.sumocfg'
     
-    def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False):
+    def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False, addvehicle = False):
+        self.name = name
         self.traffic_filename = name + ".rou.xml"
         self.from_edge_name = from_edge_name
         self.to_edge_name = to_edge_name
         self.old_traffic_filename = addTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename) if not replacefiles else setTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename, True)
+        self.addvehicle = addvehicle
     
     def generate(self, probability_list):
         random.seed(42)  # Hace que la prueba sea reproducible
         route_name = self.from_edge_name + self.to_edge_name
         with open(self.sumo_data_path+self.traffic_filename, "w") as routes:
-            print("""<routes>
-    <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>
-    <route id="{0}" edges="{1} {2}" />""".format(route_name, self.from_edge_name, self.to_edge_name), file=routes)
+            print("<routes>", file=routes)
+            if self.addvehicle:
+                print('    <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>', file=routes)
+            print('<route id="{0}" edges="{1} {2}" />'.format(route_name, self.from_edge_name, self.to_edge_name), file=routes)
             coches_contador = 0
             for i, prob in enumerate(probability_list):
                 if random.uniform(0, 1) < prob:
-                    print('    <vehicle id="xd_{0}" type="coche_normal" route="{1}" depart="{2}" color="1,1,0" />'.format(coches_contador, route_name, i), file=routes)
+                    print('    <vehicle id="{3}_{0}" type="coche_normal" route="{1}" depart="{2}" color="1,1,0" />'.format(coches_contador, route_name, i, self.name), file=routes)
                     coches_contador += 1
             print("</routes>", file=routes)
     
