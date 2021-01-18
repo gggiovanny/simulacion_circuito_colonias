@@ -76,9 +76,17 @@ def addTrafficFile(sumocfg_filepath, trafic_filename):
         raise Exception("No se encontró el nodo route-files") 
     # obteniendo el valor que tiene actualmente
     prev_val = routefiles[0].get('value')
-    if(prev_val):
+    
+    # si hay un valor previo...
+    if prev_val:
+        # si ya está puesto el valor que se quiere agregar, no cambiar nada
+        if trafic_filename in prev_val:
+            new_val = prev_val
+        # si no está, agregarlo separado por una coma
+        else:
             new_val = prev_val + ', ' + trafic_filename
     else:
+        # si no hay valor previo, será igual al nombre del archivo a agregar
         new_val = trafic_filename
     
     # asignando el nuevo valor
