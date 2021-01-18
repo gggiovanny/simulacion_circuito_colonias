@@ -8,26 +8,35 @@ class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
     sumocfg_filename = 'osm.sumocfg'
     
-    def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False, addvehicle = False):
+    def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False):
         self.name = name
         self.traffic_filename = name + ".rou.xml"
         self.from_edge_name = from_edge_name
         self.to_edge_name = to_edge_name
         self.old_traffic_filename = addTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename) if not replacefiles else setTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename, True)
-        self.addvehicle = addvehicle
     
-    def generate(self, probability_list):
+    def generate(self, probability_list, vehicle_type = "", add_demo_vehicle=True):
         random.seed(42)  # Hace que la prueba sea reproducible
         route_name = self.from_edge_name + self.to_edge_name
         with open(self.sumo_data_path+self.traffic_filename, "w") as routes:
             print("<routes>", file=routes)
-            if self.addvehicle:
-                print('    <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>', file=routes)
-            print('<route id="{0}" edges="{1} {2}" />'.format(route_name, self.from_edge_name, self.to_edge_name), file=routes)
+            # si no se define tipo de vehiculo, definir uno por defecto y usarlo
+            if not vehicle_type:
+                if add_demo_vehicle:
+                    print('    <vType id="coche_demo" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>', file=routes)
+                vehicle_type = 'coche_demo'
             coches_contador = 0
             for i, prob in enumerate(probability_list):
                 if random.uniform(0, 1) < prob:
-                    print('    <vehicle id="{3}_{0}" type="coche_normal" route="{1}" depart="{2}" color="1,1,0" />'.format(coches_contador, route_name, i, self.name), file=routes)
+                    id = '{}_{}'.format(self.name, coches_contador)
+                    # print('    <vehicle id="{3}_{0}" type="coche_normal" route="{1}" depart="{2}" color="1,1,0" />'.format(coches_contador, route_name, i, self.name), file=routes)
+                    print('    <trip id="{}" type="{}" depart="{}" departLane="best" departSpeed="max" from="{}" to="{}"/>'.format(
+                        id,
+                        vehicle_type,
+                        i,
+                        self.from_edge_name,
+                        self.to_edge_name
+                    ), file=routes)
                     coches_contador += 1
             print("</routes>", file=routes)
     
@@ -108,7 +117,7 @@ if __name__ == "__main__":
     gen1.generate(data_normal)
 
     gen2 = tg.TrafficGenerator("from_east", "to_west", name="genew")
-    gen2.generate(data_normal)
+    gen2.generate(data_normal, add_demo_vehicle=False)
 
     tg.config.testLaunch()
     gen1.restoreOldTrafficFilename()
