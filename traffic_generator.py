@@ -98,9 +98,18 @@ def addTrafficFile(sumocfg_filepath, trafic_filename):
 
 if __name__ == "__main__":
     from scipy.stats import norm
+    import traffic_generator as tg
+
     # generate random numbers from N(0,1)
-    data_normal = norm.rvs(size=3600,loc=0,scale=0.2)
+    data_normal = norm.rvs(size=3600,loc=0,scale=0.12)
     print(data_normal)
-    generator = TrafficGenerator("from_north", "to_south")
-    generator.generate(data_normal)
-    config.testLaunch()
+
+    gen1 = tg.TrafficGenerator("from_north", "to_south", name="genns")
+    gen1.generate(data_normal)
+
+    gen2 = tg.TrafficGenerator("from_east", "to_west", name="genew")
+    gen2.generate(data_normal)
+
+    tg.config.testLaunch()
+    gen1.restoreOldTrafficFilename()
+    # tg.config.traci.close()
