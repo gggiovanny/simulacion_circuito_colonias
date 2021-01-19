@@ -114,10 +114,10 @@ if __name__ == "__main__":
     print(data_normal)
 
     gen1 = tg.TrafficGenerator("from_north", "to_south", name="genns")
-    gen1.generate(data_normal)
+    gen1.generate(data_normal, vehicle_type="coche")
 
     gen2 = tg.TrafficGenerator("from_east", "to_west", name="genew")
-    gen2.generate(data_normal, add_demo_vehicle=False)
+    gen2.generate(data_normal, vehicle_type="motorcycle")
 
     tg.config.testLaunch()
     gen1.restoreOldTrafficFilename()

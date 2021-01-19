@@ -1,3 +1,22 @@
+<!-- https://sumo.dlr.de/docs/Definition_of_Vehicles,_Vehicle_Types,_and_Routes.html#abstract_vehicle_class -->
 <routes>
-  <vType id="coche_normal" length="5" color="1,1,0" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger"/>
+  <vType id="coche_custom" length="5" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger" />
+  <vType id="camion" vClass="truck" color="0,1,1"/>
+  <vType id="coche" vClass="passenger"/>
+
+  <!-- tipos de vehiculos posiblemente utiles -->
+  <vType id="emergency" vClass="emergency"/>
+  <vType id="authority" vClass="authority"/>
+  <vType id="army" vClass="army"/>
+  <vType id="vip" vClass="vip"/>
+  <vType id="pedestrian" vClass="pedestrian"/>
+  <vType id="passenger" vClass="passenger"/>
+  <vType id="taxi" vClass="taxi"/>
+  <vType id="bus" vClass="bus"/>
+  <vType id="delivery" vClass="delivery"/>
+  <vType id="truck" vClass="truck"/>
+  <vType id="trailer" vClass="trailer"/>
+  <vType id="motorcycle" vClass="motorcycle"/>
+  <vType id="moped" vClass="moped"/>
+  <vType id="bicycle" vClass="bicycle"/>
 </routes>
