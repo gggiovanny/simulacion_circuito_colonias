@@ -53,12 +53,11 @@ def setTrafficFile(sumocfg_filepath, trafic_filename, overwrite_all = False):
     if len(routefiles) < 1:
         #TODO: aqui seria bueno agregar de manera inteligente el nodo route-files cuando no exista
         raise Exception("No se encontró el nodo route-files") 
-    prev_val = ""
+    # obteniendo el valor que tiene actualmente
+    prev_val = routefiles[0].get('value')
     if overwrite_all:
         new_val = trafic_filename
     else:
-        # obteniendo el valor que tiene actualmente
-        prev_val = routefiles[0].get('value')
         # si existe valor previo, sustituir el que tenga la extensión .rou.xml por
         # el nuevo trafic_filename, si no, poner el nuevo trafic_filename tal cual
         if(prev_val):
