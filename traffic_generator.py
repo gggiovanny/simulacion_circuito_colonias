@@ -10,7 +10,7 @@ class TrafficGenerator:
     
     def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False):
         self.name = name
-        self.traffic_filename = name + ".rou.xml"
+        self.traffic_filename = name + ".trips.xml"
         self.from_edge_name = from_edge_name
         self.to_edge_name = to_edge_name
         self.old_traffic_filename = addTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename) if not replacefiles else setTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename, True)
@@ -109,19 +109,21 @@ if __name__ == "__main__":
     from scipy.stats import norm
     import traffic_generator as tg
 
-    # generate random numbers from N(0,1)
-    duration = 3600
-    data_normal = norm.rvs(size=duration,loc=0,scale=0.5)
-    print(data_normal)
+    # time section
+    minute = 20
+    day = minute * 60 * 24
+    duration = day
+    
+    data_normal = norm.rvs(size=duration,loc=0,scale=0.2)
 
     gen1 = tg.TrafficGenerator("from_north_edge", "to_south_edge", name="test.trafns")
     gen1.generate(data_normal, vehicle_type="coche")
     
-    gen2 = tg.TrafficGenerator("from_east_edge", "to_west_edge", name="test.trafew")
-    gen2.generate(data_normal, vehicle_type="coche")
+    # gen2 = tg.TrafficGenerator("from_east_edge", "to_west_edge", name="test.trafew")
+    # gen2.generate(data_normal, vehicle_type="coche")
     
-    gen3 = tg.TrafficGenerator("from_west_edge", "to_east_edge", name="test.trafwe")
-    gen3.generate(data_normal, vehicle_type="coche")
+    # gen3 = tg.TrafficGenerator("from_west_edge", "to_east_edge", name="test.trafwe")
+    # gen3.generate(data_normal, vehicle_type="coche")
 
     tg.config.testLaunch(duration)
     gen1.restoreOldTrafficFilename()

@@ -94,3 +94,27 @@ def getStateLabel(state="", label=""):
         else:
             raise ValueError("No se encontro el state={}".format(state)) 
         
+def stateChangeMsg(t, wait, estado_actual, estado_anterior, active_net_name):
+    print("\t[!]Estado cambiado: {}->{} [t={}, w={}] ({} duró {}s, lo  efectuó {})".format(
+        getStateLabel(state=estado_anterior), 
+        getStateLabel(state=estado_actual), 
+        t, 
+        wait, 
+        getStateLabel(state=estado_anterior), 
+        wait,
+        active_net_name
+    ))
+    
+def setActiveNet(net_index, nets):
+    for i, net in enumerate(nets, start=0):
+        if i==net_index:
+            net.active = True
+        else:
+            net.active = False
+
+def getActiveNetName(nets):
+    for net in nets:
+        if net.active:
+            return net.name
+    # si no retorno nada, no hay net activa
+    return "Warning: Sin red activa."
