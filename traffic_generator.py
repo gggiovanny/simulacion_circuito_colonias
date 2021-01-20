@@ -110,15 +110,19 @@ if __name__ == "__main__":
     import traffic_generator as tg
 
     # generate random numbers from N(0,1)
-    data_normal = norm.rvs(size=3600,loc=0,scale=0.12)
+    duration = 3600
+    data_normal = norm.rvs(size=duration,loc=0,scale=0.5)
     print(data_normal)
 
-    gen1 = tg.TrafficGenerator("from_north", "to_south", name="genns")
+    gen1 = tg.TrafficGenerator("from_north_edge", "to_south_edge", name="test.trafns")
     gen1.generate(data_normal, vehicle_type="coche")
+    
+    gen2 = tg.TrafficGenerator("from_east_edge", "to_west_edge", name="test.trafew")
+    gen2.generate(data_normal, vehicle_type="coche")
+    
+    gen3 = tg.TrafficGenerator("from_west_edge", "to_east_edge", name="test.trafwe")
+    gen3.generate(data_normal, vehicle_type="coche")
 
-    gen2 = tg.TrafficGenerator("from_east", "to_west", name="genew")
-    gen2.generate(data_normal, vehicle_type="motorcycle")
-
-    tg.config.testLaunch()
+    tg.config.testLaunch(duration)
     gen1.restoreOldTrafficFilename()
     # tg.config.traci.close()
