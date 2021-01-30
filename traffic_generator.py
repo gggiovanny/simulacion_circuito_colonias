@@ -6,6 +6,8 @@ import random
 from datetime import datetime
 from scipy.stats import norm
 from scipy.stats import uniform
+import numpy as np
+from operator import itemgetter
 
 class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
@@ -107,7 +109,18 @@ def addTrafficFile(sumocfg_filepath, trafic_filename):
     # retornando el valor previo por si se desea almacenarlo
     return prev_val
 
+
 def intervalToSeconds(starttime, endtime, scale = 1, FORMAT='%H:%M'):
+    """
+    Convierte intervalos de tiempo en segundos
+
+    Args:
+        starttime (undefined): Hora de inicio
+        endtime (undefined): Hora final
+        scale=1 (undefined): para que no dure realmente la cantidad de segundos del dia, por motivos de desarrollo
+        FORMAT='%H (%M'):
+
+    """
     tdelta = datetime.strptime(endtime, FORMAT) - datetime.strptime(starttime, FORMAT)
     return (int)(tdelta.total_seconds()*scale)
 
@@ -147,6 +160,22 @@ def genUniformProbs(duration, intensity):
     elif intensity != 'medium':
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
     return uniform.rvs(size=n, loc = start, scale=width)
+
+def genTrafficProbs(trafficconfigs, scale=1, printintervals=False):
+    intervalsdict = {} # dict de todas las probabilidades por día
+    for tc in trafficconfigs:
+        # deconstruyendo valores del dict en variables
+        start, end, gentype, intensity = itemgetter('start', 'end', 'gentype', 'intensity')(tc)
+        duration = intervalToSeconds(start, end, scale=scale)
+        if gentype == 'uniform':
+            intervalsdict['{}-{} ({}s)'.format(start, end, duration)] = genUniformProbs(duration, intensity)
+        elif gentype == 'peak':
+            intervalsdict['{}-{} ({}s)'.format(start, end, duration)] = genPeakProbs(duration, intensity)
+        else:
+            raise Exception('Invalid type value.')
+    if printintervals:
+        print(intervalsdict)
+    return np.concatenate(dictToList(intervalsdict))
 
 if __name__ == "__main__":
     from scipy.stats import norm
