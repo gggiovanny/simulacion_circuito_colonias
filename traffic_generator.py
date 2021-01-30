@@ -3,6 +3,9 @@ import re
 from seaborn.utils import sig_stars
 import config
 import random
+from datetime import datetime
+from scipy.stats import norm
+from scipy.stats import uniform
 
 class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
@@ -103,6 +106,47 @@ def addTrafficFile(sumocfg_filepath, trafic_filename):
     xmltree.write(sumocfg_filepath, pretty_print=True, xml_declaration=True, encoding="utf-8")
     # retornando el valor previo por si se desea almacenarlo
     return prev_val
+
+def intervalToSeconds(starttime, endtime, scale = 1, FORMAT='%H:%M'):
+    tdelta = datetime.strptime(endtime, FORMAT) - datetime.strptime(starttime, FORMAT)
+    return (int)(tdelta.total_seconds()*scale)
+
+def dictToList(dict):
+    return [(v) for k, v in dict.items()]
+
+def sumDurationDict(durationsdict):
+    sum = 0
+    for duration in dictToList(durationsdict):
+        sum += duration
+    return sum
+
+def printIntervals(durationsdict):
+    for key, value in durationsdict.items():
+        print('{}: {}'.format(key, value))
+
+def genPeakProbs(duration, intensity):
+    size = duration # the number of random variates
+    mean = 0 # mean of the distribution (loc)
+    stddev = 3 # standard deviation (scale)
+    if intensity == 'high':
+        stddev = 5
+    elif intensity == 'low':
+        stddev = 1
+    elif intensity != 'medium':
+        raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
+    return norm.rvs(size=size, loc=mean, scale=stddev)
+
+def genUniformProbs(duration, intensity):
+    n = duration # size
+    start = 0 # loc
+    width = 0.3 # scale
+    if intensity == 'high':
+        width = 0.6
+    elif intensity == 'low':
+        width = 0.1
+    elif intensity != 'medium':
+        raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
+    return uniform.rvs(size=n, loc = start, scale=width)
 
 if __name__ == "__main__":
     from scipy.stats import norm
