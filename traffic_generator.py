@@ -13,7 +13,11 @@ class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
     sumocfg_filename = 'osm.sumocfg'
     
-    def __init__(self, from_edge_name, to_edge_name, name="generated_traffic", replacefiles=False):
+    def __init__(self, from_edge_name, to_edge_name, name="", replacefiles=False):
+        if name:
+            self.name = name
+        else:
+            self.name = "{}_{}".format(from_edge_name, to_edge_name)
         self.name = name
         self.traffic_filename = name + ".trips.xml"
         self.from_edge_name = from_edge_name
