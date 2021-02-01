@@ -5,9 +5,17 @@ import petri_nets as pn
 import traffic_generator as tg
 import numpy as np
 
-def generateTraffic(scale=1):
-    # generando duraciones de cada intervalo
-    # cada intante de simulacion se corresponde a un segundo
+def generateTrafficSimDay(scale=1):
+    """
+    Description of generateTrafficSimDay
+
+    Args:
+        scale=1 (undefined): Si es igual a 1, cada instante de simulacion se
+        corresponde a un segundo. Si se quiere que se generen intervalos mas
+        cortos, mandar valores entre 0 y 1.
+        
+    Returns: TrafficGenerator
+    """
     # generando un arreglo de probabilidades de trafico de north to south en las diferentes fases del dia
     trafficconfigs = [
         { 'start': '0:00',  'end': '5:30',  'gentype': 'uniform', 'intensity': 'low' },
@@ -18,9 +26,8 @@ def generateTraffic(scale=1):
         { 'start': '18:30', 'end': '21:30', 'gentype': 'peak', 'intensity': 'medium' },
         { 'start': '21:30', 'end': '23:00', 'gentype': 'uniform', 'intensity': 'medium' },
         { 'start': '23:00', 'end': '23:59', 'gentype': 'uniform', 'intensity': 'low' },
-    
     ]
-    trafns_allday = tg.genTrafficProbs(trafficconfigs, scale=scale)
+    trafns_allday, durationsdict = tg.genTrafficProbs(trafficconfigs, scale=scale, getdurationsdict=True)
     # usandolo para generar tráfico
     gen1 = tg.TrafficGenerator("from_north_edge", "to_south_edge", name="test.trafns")
     gen1.generate(trafns_allday, vehicle_type="coche")
@@ -30,9 +37,9 @@ def generateTraffic(scale=1):
     # gen2.generate(data_normal, vehicle_type="coche")
     # gen3 = tg.TrafficGenerator("from_west_edge", "to_east_edge", name="test.trafwe")
     # gen3.generate(data_normal, vehicle_type="coche")
-    return gen1
+    return gen1, durationsdict
 
-def run():
+def run(durationsdict):
     # conectando a la base de datos
     m.connect(True)
     # obteniendo los datos de la interseccion del cache 
@@ -77,8 +84,7 @@ def run():
 
 # este es el punto de entrada al script
 if __name__ == "__main__":
-    origgen = generateTraffic(scale=0.1)
+    gen, durationsdict = generateTrafficSimDay(scale=0.1)
     # ejecutando la funcion que controla a la simulacion
-    run()
-    
-    origgen.restoreOldTrafficFilename()
+    run(durationsdict)
+    gen.restoreOldTrafficFilename()
