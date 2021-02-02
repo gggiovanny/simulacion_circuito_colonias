@@ -3,6 +3,9 @@
   <vType id="coche_custom" length="5" maxSpeed="50" accel="2.6" decel="4.5" sigma="0.2" vClass="passenger" />
   <vType id="camion" vClass="truck" color="0,1,1"/>
   <vType id="coche" vClass="passenger"/>
+  <vType id="coche_rojo" vClass="passenger" color="1,0,0"/>
+  <vType id="coche_verde" vClass="passenger" color="0,1,0"/>
+  <vType id="coche_azul" vClass="passenger" color="0,0,1"/>
 
   <!-- tipos de vehiculos posiblemente utiles -->
   <vType id="emergency" vClass="emergency"/>
