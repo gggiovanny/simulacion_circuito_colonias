@@ -131,14 +131,14 @@ def intervalToSeconds(starttime, endtime, scale = 1, FORMAT='%H:%M'):
 def dictToList(dict):
     return [(v) for k, v in dict.items()]
 
-def sumDurationDict(durationsdict):
+def sumDurationDict(intervals):
     sum = 0
-    for duration in dictToList(durationsdict):
+    for duration in dictToList(intervals):
         sum += duration
     return sum
 
-def printIntervals(durationsdict):
-    for key, value in durationsdict.items():
+def printIntervals(intervals):
+    for key, value in intervals.items():
         print('{}: {}'.format(key, value))
 
 def genPeakProbs(duration, intensity):
@@ -165,16 +165,16 @@ def genUniformProbs(duration, intensity):
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
     return uniform.rvs(size=n, loc = start, scale=width)
 
-def genTrafficProbs(trafficconfigs, scale=1, printintervals=False, getdurationsdict = False):
+def genTrafficProbs(trafficconfigs, scale=1, printintervals=False, getintervals = False):
     intervalsdict = {} # dict de todas las probabilidades por día
-    durationsdict = {} # dict donde la key es el intervalo y el value la duracion en segundos
+    intervals = {} # dict donde la key es el intervalo y el value la duracion en segundos
     for tc in trafficconfigs:
         # deconstruyendo valores del dict en variables
         start, end, gentype, intensity = itemgetter('start', 'end', 'gentype', 'intensity')(tc)
         duration = intervalToSeconds(start, end, scale=scale)
         intkey = '{}-{}'.format(start, end) # interval key
         intkeywsec = '{} ({}s)'.format(intkey, duration) # interval key with seconds
-        durationsdict[intkey] = duration
+        intervals[intkey] = duration
         if gentype == 'uniform':
             intervalsdict[intkeywsec] = genUniformProbs(duration, intensity)
         elif gentype == 'peak':
@@ -186,8 +186,8 @@ def genTrafficProbs(trafficconfigs, scale=1, printintervals=False, getdurationsd
         print(intervalsdict)
     
     allprobs = np.concatenate(dictToList(intervalsdict))
-    if getdurationsdict:
-        return allprobs, durationsdict
+    if getintervals:
+        return allprobs, intervals
     else:
         return allprobs
 

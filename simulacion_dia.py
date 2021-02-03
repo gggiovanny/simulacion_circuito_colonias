@@ -17,7 +17,7 @@ def generateTrafficSimDay(scale=1):
     Returns: TrafficGenerator
     """
     # probabilidades de trafico de north to south en las diferentes fases del dia
-    trafns_allday, durationsdict = tg.genTrafficProbs([
+    trafns_allday, intervals = tg.genTrafficProbs([
             { 'start': '0:00',  'end': '5:30',  'gentype': 'uniform', 'intensity': 'low' },
             { 'start': '5:30',  'end': '8:30',  'gentype': 'peak', 'intensity': 'medium' },
             { 'start': '8:30',  'end': '12:30', 'gentype': 'uniform', 'intensity': 'low' },
@@ -26,7 +26,7 @@ def generateTrafficSimDay(scale=1):
             { 'start': '18:30', 'end': '21:30', 'gentype': 'uniform', 'intensity': 'medium' },
             { 'start': '21:30', 'end': '23:00', 'gentype': 'uniform', 'intensity': 'medium' },
             { 'start': '23:00', 'end': '23:59', 'gentype': 'uniform', 'intensity': 'low' },
-        ], scale=scale, getdurationsdict=True
+        ], scale=scale, getintervals=True
     )
     # usandolo para generar tráfico
     gen1 = tg.TrafficGenerator("from_north_edge", "to_south_edge", name="test.trafns")
@@ -60,25 +60,11 @@ def generateTrafficSimDay(scale=1):
     )
     tg.TrafficGenerator("from_west_edge", "to_east_edge", name="test.trafwe").generate(trafwe_allday, vehicle_type="coche_verde")
     
-    return gen1, durationsdict
+    return gen1, intervals
 
-def run(durationsdict):
-    # conectando a la base de datos
-    m.connect(True)
-    # obteniendo los datos de la interseccion del cache 
-    intersection = m.getIntersection("circuito_colonias")
-    # obteniendo las redes de petri que controlan los semaforos
-    nets = [
-        pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name),
-        pn.generateDualPetriNet(intersection.associated_traffic_light_name),
-        pn.generateDualPetriNet(intersection.associated_traffic_light_name, "Dual alt net", states_set="alt")
-    ]
+def run(intervals):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
-    
-    # # obteniendo alguanas propiedades desde la simulacion
-    m.populateIntersectionUsingTraci(intersection, traci)
-    
     t = 0
     wait = 0
     # Ejecuta el bucle de control de TraCI
@@ -107,7 +93,22 @@ def run(durationsdict):
 
 # este es el punto de entrada al script
 if __name__ == "__main__":
-    gen, durationsdict = generateTrafficSimDay(scale=0.1)
+    # generando el tráfico para la simulación
+    gen, intervals = generateTrafficSimDay(scale=0.1)
+    # conectando a la base de datos
+    m.connect(True)
+    # obteniendo los datos de la interseccion del cache 
+    intersection = m.getIntersection("circuito_colonias")
+    # obteniendo las redes de petri que controlan los semaforos
+    nets = [
+        pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name),
+        pn.generateDualPetriNet(intersection.associated_traffic_light_name),
+        pn.generateDualPetriNet(intersection.associated_traffic_light_name, "Dual alt net", states_set="alt")
+    ]
     # ejecutando la funcion que controla a la simulacion
-    run(durationsdict)
-    gen.restoreOldTrafficFilename()
+    try:
+        run(intervals)
+    except:
+        print('La simulación se detuvo antes de finalizar.')
+    finally:
+        gen.restoreOldTrafficFilename()
