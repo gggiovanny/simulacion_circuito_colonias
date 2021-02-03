@@ -165,29 +165,26 @@ def genUniformProbs(duration, intensity):
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
     return uniform.rvs(size=n, loc = start, scale=width)
 
-def genTrafficProbs(trafficconfigs, scale=1, printintervals=False, getintervals = False):
+def genTrafficProbs(trafficconfigs, scale=1, getcumulativeintervals = False):
     intervalsdict = {} # dict de todas las probabilidades por día
-    intervals = {} # dict donde la key es el intervalo y el value la duracion en segundos
+    cumulativeintervals = {} # dict donde la key es el intervalo y el value la duracion en segundos
+    cumulativeduration = 0
     for tc in trafficconfigs:
         # deconstruyendo valores del dict en variables
         start, end, gentype, intensity = itemgetter('start', 'end', 'gentype', 'intensity')(tc)
         duration = intervalToSeconds(start, end, scale=scale)
-        intkey = '{}-{}'.format(start, end) # interval key
-        intkeywsec = '{} ({}s)'.format(intkey, duration) # interval key with seconds
-        intervals[intkey] = duration
+        cumulativeduration += duration
+        intkeywsec = '{}-{} ({}s)'.format(start, end, duration) # interval key with seconds
+        cumulativeintervals[end] = cumulativeduration
         if gentype == 'uniform':
             intervalsdict[intkeywsec] = genUniformProbs(duration, intensity)
         elif gentype == 'peak':
             intervalsdict[intkeywsec] = genPeakProbs(duration, intensity)
         else:
             raise Exception('Invalid type value.')
-    
-    if printintervals:
-        print(intervalsdict)
-    
     allprobs = np.concatenate(dictToList(intervalsdict))
-    if getintervals:
-        return allprobs, intervals
+    if getcumulativeintervals:
+        return allprobs, cumulativeintervals
     else:
         return allprobs
 

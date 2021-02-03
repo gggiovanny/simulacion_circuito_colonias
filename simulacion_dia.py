@@ -26,7 +26,7 @@ def generateTrafficSimDay(scale=1):
             { 'start': '18:30', 'end': '21:30', 'gentype': 'uniform', 'intensity': 'medium' },
             { 'start': '21:30', 'end': '23:00', 'gentype': 'uniform', 'intensity': 'medium' },
             { 'start': '23:00', 'end': '23:59', 'gentype': 'uniform', 'intensity': 'low' },
-        ], scale=scale, getintervals=True
+        ], scale=scale, getcumulativeintervals=True
     )
     # usandolo para generar tráfico
     gen1 = tg.TrafficGenerator("from_north_edge", "to_south_edge", name="test.trafns")
@@ -74,15 +74,22 @@ def run(intervals):
         m.autoGenerateState(intersection, traci, t, "demo_fases_dia")
         # avanzando la simulacion
         traci.simulationStep()
-        if t < 120:
-            pn.setActiveNet(0, nets)
-            nets[0].nextStep(t)
-        elif t < 120*2:
-            pn.setActiveNet(1, nets)
-            nets[1].nextStep(t)
-        else:
+        #? entre las 5:30 y las 8:30,  y entre las 18:30 y las 21:30, poner la
+        #? red pensada para más volumen de tráfico.
+        if intervals['5:30'] < t < intervals['8:30']:
             pn.setActiveNet(2, nets)
             nets[2].nextStep(t)
+        elif intervals['18:30'] < t < intervals['21:30']:
+            pn.setActiveNet(2, nets)
+            nets[2].nextStep(t)
+        #? entre las 12:30 y las 15:30, poner la  red pensada para trafico medio
+        elif intervals['12:30'] < t < intervals['15:30']:
+            pn.setActiveNet(1, nets)
+            nets[1].nextStep(t)
+        #? en los otros intervalos, poner la red por defecto
+        else:
+            pn.setActiveNet(0, nets)
+            nets[0].nextStep(t)
         t+=1
         wait+=1
         estado_actual = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
