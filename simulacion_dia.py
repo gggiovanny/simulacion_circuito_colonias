@@ -62,7 +62,7 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(intervals):
+def run(intervals, nets):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
@@ -77,19 +77,19 @@ def run(intervals):
         #? entre las 5:30 y las 8:30,  y entre las 18:30 y las 21:30, poner la
         #? red pensada para más volumen de tráfico.
         if intervals['5:30'] < t < intervals['8:30']:
-            pn.setActiveNet(2, nets)
-            nets[2].nextStep(t)
+            pn.setActiveNet("in", nets)
+            nets["in"].nextStep(t)
         elif intervals['18:30'] < t < intervals['21:30']:
-            pn.setActiveNet(2, nets)
-            nets[2].nextStep(t)
+            pn.setActiveNet("out", nets)
+            nets["out"].nextStep(t)
         #? entre las 12:30 y las 15:30, poner la  red pensada para trafico medio
         elif intervals['12:30'] < t < intervals['15:30']:
-            pn.setActiveNet(1, nets)
-            nets[1].nextStep(t)
+            pn.setActiveNet("inout", nets)
+            nets["inout"].nextStep(t)
         #? en los otros intervalos, poner la red por defecto
         else:
-            pn.setActiveNet(0, nets)
-            nets[0].nextStep(t)
+            pn.setActiveNet("default", nets)
+            nets["default"].nextStep(t)
         t+=1
         wait+=1
         estado_actual = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
@@ -107,15 +107,16 @@ if __name__ == "__main__":
     # obteniendo los datos de la interseccion del cache 
     intersection = m.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos
-    nets = [
-        pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name),
-        pn.generateDualPetriNet(intersection.associated_traffic_light_name),
-        pn.generateDualPetriNet(intersection.associated_traffic_light_name, "Dual alt net", states_set="alt")
-    ]
+    nets = {
+        "out": pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name, name="Hight out traffic net"),
+        "in": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="High in traffic net"),
+        "inout": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="In and out traffic net", states_set="alt"),
+        "default": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="Default traffic net", states_set="alt"),
+    }
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(intervals)
-    except:
-        print('La simulación se detuvo antes de finalizar.')
+        run(intervals, nets)
+    # except:
+    #     print('La simulación se detuvo antes de finalizar.')
     finally:
         gen.restoreOldTrafficFilename()

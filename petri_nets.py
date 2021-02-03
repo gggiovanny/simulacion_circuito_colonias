@@ -1,7 +1,7 @@
 import PetriPy as petri
 from config import traci
 
-def generateDemoTlsPetriNet(tls_name):
+def generateDemoTlsPetriNet(tls_name, name="Basic net"):
     # generando una lista de objetos Places() (Lugares) en una lista llamada 'places'
     places = petri.generatePlaces(range(4))
     # repitiendo el mismo proceso para generar los objetos tipo Transition() en la lista 'transition'
@@ -27,7 +27,7 @@ def generateDemoTlsPetriNet(tls_name):
     transition[3].action = lambda:traci.trafficlight.setRedYellowGreenState(tls_name, getStateLabel(label="demo state 4"))
     # el estado inicial de las marcas
     initial_state = [1,0,0,0]
-    return petri.Network(places, transition, initial_state, name="Basic net")
+    return petri.Network(places, transition, initial_state, name=name)
 
 def generateDualPetriNet(tls_name, name="Dual net", states_set="default"):
     NET_LENGTH = 5
@@ -106,14 +106,16 @@ def stateChangeMsg(t, wait, estado_actual, estado_anterior, active_net_name):
     ))
     
 def setActiveNet(net_index, nets):
-    for i, net in enumerate(nets, start=0):
+    # dinamicamente recorrer nets para que funcione si es list o dict
+    for i, net in nets.items() if type(nets) is dict else enumerate(nets, start=0):
         if i==net_index:
             net.active = True
         else:
             net.active = False
 
 def getActiveNetName(nets):
-    for net in nets:
+    # dinamicamente recorrer nets para que funcione si es list o dict
+    for net in nets.values() if type(nets) is dict else nets:
         if net.active:
             return net.name
     # si no retorno nada, no hay net activa
