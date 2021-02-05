@@ -3,9 +3,8 @@ import re
 from seaborn.utils import sig_stars
 import config
 import random
-from datetime import datetime
-from scipy.stats import norm
-from scipy.stats import uniform
+from datetime import datetime, timedelta
+from scipy.stats import norm, uniform
 import numpy as np
 from operator import itemgetter
 
@@ -127,6 +126,9 @@ def intervalToSeconds(starttime, endtime, scale = 1, FORMAT='%H:%M'):
     """
     tdelta = datetime.strptime(endtime, FORMAT) - datetime.strptime(starttime, FORMAT)
     return (int)(tdelta.total_seconds()*scale)
+
+def secondsToTime(seconds):
+    return str(timedelta(seconds=seconds))
 
 def dictToList(dict):
     return [(v) for k, v in dict.items()]

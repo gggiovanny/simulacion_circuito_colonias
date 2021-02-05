@@ -71,7 +71,8 @@ def run(intervals, nets):
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
         # recorriendo todas las calles y generando el estado de cada una
-        m.autoGenerateState(intersection, traci, t, "demo_fases_dia")
+        state_label = '{}, {}'.format(tg.secondsToTime(t), pn.getActiveNetName(nets))
+        m.autoGenerateState(intersection, traci, t, state_label)
         # avanzando la simulacion
         traci.simulationStep()
         #? entre las 5:30 y las 8:30,  y entre las 18:30 y las 21:30, poner la
@@ -103,7 +104,10 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # conectando a la base de datos
-    m.connect(True)
+    m.connect(False)
+    # de manera dinaminca, si no existe en la bd la interseccion de circuito colonias, crearla
+    if not m.existsIntersection("circuito_colonias"):
+        m.create_cinco_colonias_intersection()
     # obteniendo los datos de la interseccion del cache 
     intersection = m.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos

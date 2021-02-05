@@ -1,5 +1,6 @@
 import PetriPy as petri
 from config import traci
+from datetime import timedelta
 
 def generateDemoTlsPetriNet(tls_name, name="Basic net"):
     # generando una lista de objetos Places() (Lugares) en una lista llamada 'places'
@@ -95,10 +96,11 @@ def getStateLabel(state="", label=""):
             raise ValueError("No se encontro el state={}".format(state)) 
         
 def stateChangeMsg(t, wait, estado_actual, estado_anterior, active_net_name):
-    print("\t[!]Estado cambiado: {}->{} [t={}, w={}] ({} duró {}s, lo  efectuó {})".format(
+    print("\t[!]Estado cambiado: {}->{} [t={}({}), w={}] ({} duró {}s, lo  efectuó {})".format(
         getStateLabel(state=estado_anterior), 
         getStateLabel(state=estado_actual), 
-        t, 
+        t,
+        str(timedelta(seconds=t)),
         wait, 
         getStateLabel(state=estado_anterior), 
         wait,
@@ -119,4 +121,4 @@ def getActiveNetName(nets):
         if net.active:
             return net.name
     # si no retorno nada, no hay net activa
-    return "Warning: Sin red activa."
+    return "Sin red de petri activa."
