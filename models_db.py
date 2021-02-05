@@ -23,8 +23,8 @@ class Edge(db.Entity): # o calle/arista
     def aprox_area(self):
         return self.aprox_length * self.aprox_total_width # area calculada
     
-    def getRepresentation(self):
-        return "{} -> {}".format(self.from_edge.name, self.to_edge.name)
+    def __str__(self):
+        return self.name
 class Conection(db.Entity):
     # propiedades
     intersection = Optional(lambda:Intersection) #  relaciona que una Intersection puede tener varias Conections
@@ -34,6 +34,8 @@ class Conection(db.Entity):
     def autoSetTraficInputs(self):
         self.from_edge.is_traffic_input = True 
         self.to_edge.is_traffic_input = False
+    def __str__(self):
+        return '{}->{}'.format(self.from_edge.__str__(), self.to_edge.__str__())
 class Intersection(db.Entity):
     # propiedades
     name = Required(str)
@@ -44,6 +46,14 @@ class Intersection(db.Entity):
     def edges(self):
         return self.getEdges()
     
+    @property
+    def in_edges(self):
+        return self.getInEdges()
+    
+    @property
+    def out_edges(self):
+        return self.getOutEdges()
+    
     def getEdges(self):
         edges_list = []
         for con in self.conections:
@@ -51,10 +61,20 @@ class Intersection(db.Entity):
             edges_list.append(con.to_edge)
         return edges_list
     
-    def getRepresentation(self):
-        edges_str = ', '.join(map(str, self.edges_list))
-        conections_str = ', '.join(map(str, self.conections_list))
-        return "[{}] controls:\n\tedges: [{}]\n\tconections: [{}]".format(self.associated_traffic_light_name, edges_str, conections_str)
+    def getInEdges(self):
+        edges_list = []
+        for con in self.conections:
+            edges_list.append(con.from_edge)
+        return edges_list
+    
+    def getOutEdges(self):
+        edges_list = []
+        for con in self.conections:
+            edges_list.append(con.to_edge)
+        return edges_list
+    
+    def __str__(self):
+        return self.name
 class EdgeState(db.Entity):
     name = Required(str)
     timestamp = Required(int)
@@ -63,7 +83,14 @@ class EdgeState(db.Entity):
     waiting_time = Optional(float) #  the sum of the waiting times for all vehicles on the edge
     occupancy = Optional(float) # the percentage of time the edge was occupied by a vehicle (%)
     state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
-
+    travel_time = Optional(float) # the current travel time (length/mean speed).
+    co2_emission = Optional(float) # Sum of CO2 emissions on this edge in mg during this time step
+    fuel_consumption = Optional(float) # Sum of fuel consumption on this edge in ml during this time step
+    noise_emission = Optional(float) # Sum of noise generated on this edge in dBA
+    halting_number = Optional(float) # Returns the total number of halting vehicles for the last time step on the given edge. A speed of less than 0.1 m/s is considered a halt.
+    
+    def __str__(self):
+            return self.name
 
 def connect(in_memory_database = True):
     # conectando a la base de datos
@@ -73,10 +100,6 @@ def connect(in_memory_database = True):
         db.bind(provider='sqlite', filename='cache.sqlite', create_db=True) # file database
     # mapeando modelos a la base de datos
     db.generate_mapping(create_tables=True)
-    # de manera dinaminca, si no existe la interseccion de circuito colonias, crearla
-    if not existsIntersection("circuito_colonias"):
-        create_cinco_colonias_intersection()
-
 
 # haciando funciones de insersion y consulta
 @db_session
@@ -108,7 +131,12 @@ def generateEdgeStateWithTraci(traci, edge_name, timestamp, state_label):
         mean_speed=traci.edge.getLastStepMeanSpeed(edge_name),
         waiting_time=traci.edge.getWaitingTime(edge_name),
         occupancy=traci.edge.getLastStepOccupancy(edge_name),
-        state_label=state_label
+        state_label=state_label,
+        travel_time=traci.edge.getTraveltime(edge_name),
+        co2_emission=traci.edge.getCO2Emission(edge_name),
+        fuel_consumption=traci.edge.getFuelConsumption(edge_name),
+        noise_emission=traci.edge.getNoiseEmission(edge_name),
+        halting_number=traci.edge.getLastStepHaltingNumber(edge_name)
 )
     
 @db_session
@@ -129,6 +157,6 @@ def populateIntersectionUsingTraci(intersection, traci):
 @db_session
 def autoGenerateState(intersection, traci, timestamp, label):
     intersection_refreshed = getIntersection(intersection.name)
-    for edge in intersection_refreshed.edges:
+    for edge in intersection_refreshed.in_edges:
         generateEdgeStateWithTraci(traci, edge.name, timestamp, label)
         
