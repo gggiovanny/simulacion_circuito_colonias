@@ -12,20 +12,39 @@ class TrafficGenerator:
     sumo_data_path = config.sumo_data_path
     sumocfg_filename = 'osm.sumocfg'
     
-    def __init__(self, from_edge_name, to_edge_name, name="", replacefiles=False):
-        if name:
-            self.name = name
-        else:
-            self.name = "{}_{}".format(from_edge_name, to_edge_name)
-        self.name = name
-        self.traffic_filename = name + ".trips.xml"
+    def __init__(self, from_edge_name, to_edge_name, name="", replacefiles=False, to_edge_probabilities=[]):
         self.from_edge_name = from_edge_name
         self.to_edge_name = to_edge_name
+        # si to_edge_name es una lista...
+        if type(to_edge_name) is list:
+            # recibir las probabilidades si estan definidas
+            if to_edge_probabilities:
+                self.to_edge_probabilities = to_edge_probabilities
+            # si no, generar probabilidades iguales para cada elemento
+            else:
+                nel = len(to_edge_name) # numero de elementos
+                self.to_edge_probabilities = [1/nel for _ in range(nel)] # arreglo del tamaño de 'nel' donde cada elemento es 1/'nel'
+        if name:
+            self.name = name
+        elif type(to_edge_name) is str and type(from_edge_name) is str:
+            self.name = "{}_{}".format(from_edge_name, to_edge_name)
+        else:
+            raise Exception('No se especificó un name para el generador.')
+        self.traffic_filename = name + ".trips.xml"
         self.old_traffic_filename = addTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename) if not replacefiles else setTrafficFile(self.sumo_data_path+self.sumocfg_filename, self.traffic_filename, True)
+    
+    # si to_edge_name es una lista, regresa uno de sus valores de acuerdo a las
+    # probabilidades definidas
+    def selectToEdge(self):
+        # si to_edge_name es una lista, retornar uno de sus valores
+        if type(self.to_edge_name) is list:
+            return np.random.choice(self.to_edge_name, 1, p=self.to_edge_probabilities)[0]
+        # si no, regresar su valor unico
+        else:
+            return self.to_edge_name
     
     def generate(self, probability_list, vehicle_type = "", add_demo_vehicle=True):
         random.seed(42)  # Hace que la prueba sea reproducible
-        route_name = self.from_edge_name + self.to_edge_name
         with open(self.sumo_data_path+self.traffic_filename, "w") as routes:
             print("<routes>", file=routes)
             # si no se define tipo de vehiculo, definir uno por defecto y usarlo
@@ -43,7 +62,7 @@ class TrafficGenerator:
                         vehicle_type,
                         i,
                         self.from_edge_name,
-                        self.to_edge_name
+                        self.selectToEdge()
                     ), file=routes)
                     coches_contador += 1
             print("</routes>", file=routes)
