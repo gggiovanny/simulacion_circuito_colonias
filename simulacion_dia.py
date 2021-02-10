@@ -29,7 +29,7 @@ def generateTrafficSimDay(scale=1):
         ], scale=scale, getcumulativeintervals=True
     )
     # usandolo para generar tráfico
-    gen1 = tg.TrafficGenerator("from_north_edge", ['to_south_edge', 'to_west_edge', 'to_east_edge'], name="test.trafns")
+    gen1 = tg.TrafficGenerator(['from_north_edge', 'from_west_edge'], ['to_south_edge', 'to_west_edge', 'to_east_edge'], name="test.trafns")
     gen1.generate(trafns_allday, vehicle_type="coche_azul")
     
     # # trafico de east to west en las diferentes fases del dia
