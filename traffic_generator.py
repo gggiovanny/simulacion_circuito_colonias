@@ -186,27 +186,26 @@ def printIntervals(intervals):
 
 def genPeakProbs(duration, intensity):
     size = duration # the number of random variates
-    mean = 0 # mean of the distribution (loc)
-    stddev = 3 # standard deviation (scale)
+    mean = 0.5 # mean of the distribution (loc)
+    stddev = 0.8 # standard deviation (scale)
+    input_numbers = np.linspace(0, 1, size) # genera numeros entre 0 y 1
+    
     if intensity == 'high':
-        stddev = 5
+        stddev = 0.4
     elif intensity == 'low':
-        stddev = 1
+        stddev = 4
     elif intensity != 'medium':
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
-    return norm.rvs(size=size, loc=mean, scale=stddev)
+    return norm.pdf(x=input_numbers, loc=mean, scale=stddev)
 
 def genUniformProbs(duration, intensity):
-    n = duration # size
-    start = 0 # loc
-    width = 0.3 # scale
     if intensity == 'high':
-        width = 0.6
+        return np.random.uniform(low=0, high=1, size=duration)
     elif intensity == 'low':
-        width = 0.1
+        return np.random.uniform(low=0, high=0.2, size=duration)
     elif intensity != 'medium':
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
-    return uniform.rvs(size=n, loc = start, scale=width)
+    return np.random.uniform(low=0, high=0.6, size=duration)
 
 def genTrafficProbs(trafficconfigs, scale=1, getcumulativeintervals = False):
     intervalsdict = {} # dict de todas las probabilidades por día
