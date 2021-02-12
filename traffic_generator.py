@@ -184,7 +184,7 @@ def printIntervals(intervals):
     for key, value in intervals.items():
         print('{}: {}'.format(key, value))
 
-def genPeakProbs(duration, intensity):
+def genPeakProbs(duration, intensity, graphmode=False):
     size = duration # the number of random variates
     mean = 0.5 # mean of the distribution (loc)
     stddev = 0.8 # standard deviation (scale)
@@ -196,17 +196,30 @@ def genPeakProbs(duration, intensity):
         stddev = 4
     elif intensity != 'medium':
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
-    return norm.pdf(x=input_numbers, loc=mean, scale=stddev)
+    probs = norm.pdf(x=input_numbers, loc=mean, scale=stddev)
+    if(graphmode):
+        return {
+            'x': np.arange(duration),
+            'y': probs
+        }
+    else: 
+        return probs
 
-def genUniformProbs(duration, intensity):
+def genUniformProbs(duration, intensity, graphmode=False):
     if intensity == 'high':
         return np.random.uniform(low=0, high=1, size=duration)
     elif intensity == 'low':
         return np.random.uniform(low=0, high=0.2, size=duration)
     elif intensity != 'medium':
         raise Exception('Invalid intensity value. Allowed values: "high", "medium" and "low"')
-    return np.random.uniform(low=0, high=0.6, size=duration)
-
+    probs = np.random.uniform(low=0, high=0.6, size=duration)
+    if graphmode:
+        return {
+            'x': np.arange(duration),
+            'y': probs
+        }
+    else:
+        return probs
 def genTrafficProbs(trafficconfigs, scale=1, getcumulativeintervals = False):
     intervalsdict = {} # dict de todas las probabilidades por día
     cumulativeintervals = {} # dict donde la key es el intervalo y el value la duracion en segundos
