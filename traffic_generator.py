@@ -162,8 +162,7 @@ def intervalToSeconds(starttime, endtime, scale = 1, FORMAT='%H:%M'):
         starttime (undefined): Hora de inicio
         endtime (undefined): Hora final
         scale=1 (undefined): para que no dure realmente la cantidad de segundos del dia, por motivos de desarrollo
-        FORMAT='%H (%M'):
-
+        FORMAT='%H:%M': formato en el que se proporcionará la hora de inicio y de fin.
     """
     tdelta = datetime.strptime(endtime, FORMAT) - datetime.strptime(starttime, FORMAT)
     return (int)(tdelta.total_seconds()*scale)
