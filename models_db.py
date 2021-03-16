@@ -77,12 +77,14 @@ class Intersection(db.Entity):
         return self.name
 class EdgeState(db.Entity):
     name = Required(str)
-    timestamp = Required(int)
+    simulation_time = Required(int)
+    time_formated = Optional(str) 
+    state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
+    active_net_name = Optional(str) 
     vehicle_number = Optional(int) # The number of vehicles on this lane within the last time step.
     mean_speed = Optional(float) # the mean speed of vehicles that were on this lane within the last simulation step [m/s]
     waiting_time = Optional(float) #  the sum of the waiting times for all vehicles on the edge
     occupancy = Optional(float) # the percentage of time the edge was occupied by a vehicle (%)
-    state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
     travel_time = Optional(float) # the current travel time (length/mean speed).
     co2_emission = Optional(float) # Sum of CO2 emissions on this edge in mg during this time step
     fuel_consumption = Optional(float) # Sum of fuel consumption on this edge in ml during this time step
@@ -123,10 +125,10 @@ def create_cinco_colonias_intersection():
     )
 
 @db_session
-def generateEdgeStateWithTraci(traci, edge_name, timestamp, state_label):
+def generateEdgeStateWithTraci(traci, edge_name, simulation_time, state_label='', time_formated='', active_net_name=''):
     return EdgeState(
         name=edge_name,
-        timestamp=timestamp,
+        simulation_time=simulation_time,
         vehicle_number=traci.edge.getLastStepVehicleNumber(edge_name),
         mean_speed=traci.edge.getLastStepMeanSpeed(edge_name),
         waiting_time=traci.edge.getWaitingTime(edge_name),
@@ -136,7 +138,9 @@ def generateEdgeStateWithTraci(traci, edge_name, timestamp, state_label):
         co2_emission=traci.edge.getCO2Emission(edge_name),
         fuel_consumption=traci.edge.getFuelConsumption(edge_name),
         noise_emission=traci.edge.getNoiseEmission(edge_name),
-        halting_number=traci.edge.getLastStepHaltingNumber(edge_name)
+        halting_number=traci.edge.getLastStepHaltingNumber(edge_name),
+        time_formated=time_formated,
+        active_net_name=active_net_name
 )
     
 @db_session
@@ -155,8 +159,14 @@ def populateIntersectionUsingTraci(intersection, traci):
         edge.street_name = traci.edge.getStreetName(edge.name)
 
 @db_session
-def autoGenerateState(intersection, traci, timestamp, label):
+def autoGenerateState(intersection, traci, simulation_time, state_label='', time_formated='', active_net_name=''):
     intersection_refreshed = getIntersection(intersection.name)
     for edge in intersection_refreshed.in_edges:
-        generateEdgeStateWithTraci(traci, edge.name, timestamp, label)
+        generateEdgeStateWithTraci(traci,
+            edge_name=edge.name,
+            simulation_time=simulation_time,
+            state_label=state_label,
+            time_formated=time_formated,
+            active_net_name=active_net_name
+        )
         

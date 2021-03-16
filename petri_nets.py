@@ -81,14 +81,15 @@ label_colors = {
     "default red": "rrrrrrryyyy",
     "alt green": "rrGGGrrGGGG",
     "alt yellow": "rryyyrryyyy",
-    "alt red": "GGrrrGGrrrr"
+    "alt red": "GGrrrGGrrrr",
+    "Sin inicializar": ""
 }
 
 
 def getStateLabel(state="", label=""):
     if label:
         return label_colors[label]
-    elif state:
+    elif state != None:
         label_list = [label for label,color_state in label_colors.items() if color_state == state]
         if label_list:
             return label_list[0] 

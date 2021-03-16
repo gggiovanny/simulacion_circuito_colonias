@@ -67,12 +67,18 @@ def run(intervals, nets):
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
     wait = 0
+    estado_anterior = ''
+    estado_actual = ''
     # Ejecuta el bucle de control de TraCI
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
         # recorriendo todas las calles y generando el estado de cada una
-        state_label = '{}, {}'.format(tg.secondsToTime(t), pn.getActiveNetName(nets))
-        m.autoGenerateState(intersection, traci, t, state_label)
+        m.autoGenerateState(intersection, traci,
+            simulation_time=t,
+            time_formated=tg.secondsToTime(t),
+            state_label=pn.getStateLabel(state=estado_actual),
+            active_net_name=pn.getActiveNetName(nets)
+        )
         # avanzando la simulacion
         traci.simulationStep()
         #? entre las 5:30 y las 8:30,  y entre las 18:30 y las 21:30, poner la
@@ -104,7 +110,7 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # conectando a la base de datos
-    m.connect(True)
+    m.connect(False)
     # de manera dinaminca, si no existe en la bd la interseccion de circuito colonias, crearla
     if not m.existsIntersection("circuito_colonias"):
         m.create_cinco_colonias_intersection()
