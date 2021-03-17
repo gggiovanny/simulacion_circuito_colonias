@@ -62,7 +62,7 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(intervals, nets, ts):
+def run(intervals, nets, ts, intersection):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
@@ -73,9 +73,8 @@ def run(intervals, nets, ts):
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
         # recorriendo todas las calles y generando el estado de cada una
-        ts.autoGenerateState(intersection, traci,
+        ts.collect(intersection,
             simulation_time=t,
-            time_formated=tg.secondsToTime(t),
             state_label=pn.getStateLabel(state=estado_actual),
             active_net_name=pn.getActiveNetName(nets)
         )
@@ -110,7 +109,7 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
-    ts = TrafficStorage()
+    ts = TrafficStorage(traci)
     # obteniendo los datos de la interseccion del cache 
     intersection = ts.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos
@@ -122,7 +121,7 @@ if __name__ == "__main__":
     }
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(intervals, nets, ts)
+        run(intervals, nets, ts, intersection)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:

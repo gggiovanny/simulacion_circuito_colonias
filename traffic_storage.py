@@ -1,9 +1,13 @@
 from models_db import *
 from pony.orm import db_session
+from traffic_generator import secondsToTime
 
 
 class TrafficStorage:
-    def __init__(self):
+    def __init__(self, traci):
+        # instancia de traci
+        self.traci = traci
+
         # conectando a la base de datos
         connect(False)
         # de manera dinaminca, si no existe en la bd la interseccion de circuito colonias, crearla
@@ -11,42 +15,42 @@ class TrafficStorage:
             self.create_cinco_colonias_intersection()
         pass
 
-    def store(self):
+    def save(self):
         pass
 
-    def hold(self):
-        pass
+    def collect(self, *args, **kwargs):
+        self.autoGenerateState(*args, **kwargs)
 
     @db_session
-    def generateEdgeStateWithTraci(self, traci, edge_name, simulation_time, state_label='', time_formated='', active_net_name=''):
+    def generateEdgeStateWithTraci(self, edge_name, simulation_time, state_label='', time_formated='', active_net_name=''):
         return EdgeState(
             name=edge_name,
             simulation_time=simulation_time,
-            vehicle_number=traci.edge.getLastStepVehicleNumber(edge_name),
-            mean_speed=traci.edge.getLastStepMeanSpeed(edge_name),
-            waiting_time=traci.edge.getWaitingTime(edge_name),
-            occupancy=traci.edge.getLastStepOccupancy(edge_name),
+            vehicle_number=self.traci.edge.getLastStepVehicleNumber(edge_name),
+            mean_speed=self.traci.edge.getLastStepMeanSpeed(edge_name),
+            waiting_time=self.traci.edge.getWaitingTime(edge_name),
+            occupancy=self.traci.edge.getLastStepOccupancy(edge_name),
             state_label=state_label,
-            travel_time=traci.edge.getTraveltime(edge_name),
-            co2_emission=traci.edge.getCO2Emission(edge_name),
-            fuel_consumption=traci.edge.getFuelConsumption(edge_name),
-            noise_emission=traci.edge.getNoiseEmission(edge_name),
-            halting_number=traci.edge.getLastStepHaltingNumber(edge_name),
+            travel_time=self.traci.edge.getTraveltime(edge_name),
+            co2_emission=self.traci.edge.getCO2Emission(edge_name),
+            fuel_consumption=self.traci.edge.getFuelConsumption(edge_name),
+            noise_emission=self.traci.edge.getNoiseEmission(edge_name),
+            halting_number=self.traci.edge.getLastStepHaltingNumber(edge_name),
             time_formated=time_formated,
             active_net_name=active_net_name
         )
 
     @db_session
-    def autoGenerateState(self, intersection, traci, simulation_time, state_label='', time_formated='', active_net_name=''):
+    def autoGenerateState(self, intersection, simulation_time, state_label='', active_net_name=''):
         intersection_refreshed = self.getIntersection(intersection.name)
         for edge in intersection_refreshed.in_edges:
-            self.generateEdgeStateWithTraci(traci,
-                                            edge_name=edge.name,
-                                            simulation_time=simulation_time,
-                                            state_label=state_label,
-                                            time_formated=time_formated,
-                                            active_net_name=active_net_name
-                                            )
+            self.generateEdgeStateWithTraci(
+                edge_name=edge.name,
+                simulation_time=simulation_time,
+                state_label=state_label,
+                time_formated=secondsToTime(simulation_time),
+                active_net_name=active_net_name
+            )
 
     @db_session
     def getIntersection(self, name):
@@ -80,8 +84,8 @@ class TrafficStorage:
         return Intersection.exists(name=name)
 
     @db_session
-    def populateIntersectionUsingTraci(self, intersection, traci):
+    def populateIntersectionUsingTraci(self, intersection):
         intersection_refreshed = self.getIntersection(intersection.name)
         for edge in intersection_refreshed.edges:
-            edge.num_lanes = traci.edge.getLaneNumber(edge.name)
-            edge.street_name = traci.edge.getStreetName(edge.name)
+            edge.num_lanes = self.traci.edge.getLaneNumber(edge.name)
+            edge.street_name = self.traci.edge.getStreetName(edge.name)
