@@ -1,9 +1,9 @@
 from config import traci
 import config
-import models_db as m
 import petri_nets as pn
 import traffic_generator as tg
 import numpy as np
+from traffic_storage import TrafficStorage
 
 def generateTrafficSimDay(scale=1):
     """
@@ -62,7 +62,7 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(intervals, nets):
+def run(intervals, nets, ts):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
@@ -73,7 +73,7 @@ def run(intervals, nets):
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
         # recorriendo todas las calles y generando el estado de cada una
-        m.autoGenerateState(intersection, traci,
+        ts.autoGenerateState(intersection, traci,
             simulation_time=t,
             time_formated=tg.secondsToTime(t),
             state_label=pn.getStateLabel(state=estado_actual),
@@ -109,13 +109,10 @@ def run(intervals, nets):
 if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
-    # conectando a la base de datos
-    m.connect(False)
-    # de manera dinaminca, si no existe en la bd la interseccion de circuito colonias, crearla
-    if not m.existsIntersection("circuito_colonias"):
-        m.create_cinco_colonias_intersection()
+    # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
+    ts = TrafficStorage()
     # obteniendo los datos de la interseccion del cache 
-    intersection = m.getIntersection("circuito_colonias")
+    intersection = ts.getIntersection("circuito_colonias")
     # obteniendo las redes de petri que controlan los semaforos
     nets = {
         "out": pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name, name="Hight out traffic net"),
@@ -125,8 +122,8 @@ if __name__ == "__main__":
     }
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(intervals, nets)
-    except:
-        print('La simulación se detuvo antes de finalizar.')
+        run(intervals, nets, ts)
+    except traci.exceptions.FatalTraCIError:
+        print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:
         gen.restoreOldTrafficFilename()

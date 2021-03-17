@@ -72,7 +72,7 @@ def generateDualPetriNet(tls_name, name="Dual net", states_set="default"):
     return petri.Network(p, t, initial_state, name=name)
 
 label_colors = {
-    "demo state 1": "GGggGGGrrrr",
+    "demo state 1": "GGgggGGrrrr",
     "demo state 2": "yyyyyyyrrrr",
     "demo state 3": "rrrrrrrGGGG",
     "demo state 4": "rrrrrrryyyy",
