@@ -62,7 +62,7 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(intervals, nets, ts, intersection):
+def run(intervals, nets, ts, tls_name):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
@@ -71,9 +71,9 @@ def run(intervals, nets, ts, intersection):
     estado_actual = ''
     # Ejecuta el bucle de control de TraCI
     while traci.simulation.getMinExpectedNumber() > 0:
-        estado_anterior = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
+        estado_anterior = traci.trafficlight.getRedYellowGreenState(tls_name)
         # recorriendo todas las calles y generando el estado de cada una
-        ts.collect(intersection,
+        ts.collect(
             simulation_time=t,
             state_label=pn.getStateLabel(state=estado_actual),
             active_net_name=pn.getActiveNetName(nets)
@@ -98,7 +98,7 @@ def run(intervals, nets, ts, intersection):
             nets["default"].nextStep(t)
         t+=1
         wait+=1
-        estado_actual = traci.trafficlight.getRedYellowGreenState(intersection.associated_traffic_light_name)
+        estado_actual = traci.trafficlight.getRedYellowGreenState(tls_name)
         if estado_actual != estado_anterior:
             pn.stateChangeMsg(t, wait, estado_actual, estado_anterior, pn.getActiveNetName(nets))
             wait = 0
@@ -109,19 +109,18 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
-    ts = TrafficStorage(traci)
-    # obteniendo los datos de la interseccion del cache 
-    intersection = ts.getIntersection("circuito_colonias")
+    ts = TrafficStorage(traci, 'circuito_colonias')
+    tls_name = ts.intersection.associated_traffic_light_name
     # obteniendo las redes de petri que controlan los semaforos
     nets = {
-        "out": pn.generateDemoTlsPetriNet(intersection.associated_traffic_light_name, name="Hight out traffic net"),
-        "in": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="High in traffic net"),
-        "inout": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="In and out traffic net", states_set="alt"),
-        "default": pn.generateDualPetriNet(intersection.associated_traffic_light_name, name="Default traffic net", states_set="alt"),
+        "out": pn.generateDemoTlsPetriNet(tls_name, name="Hight out traffic net"),
+        "in": pn.generateDualPetriNet(tls_name, name="High in traffic net"),
+        "inout": pn.generateDualPetriNet(tls_name, name="In and out traffic net", states_set="alt"),
+        "default": pn.generateDualPetriNet(tls_name, name="Default traffic net", states_set="alt"),
     }
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(intervals, nets, ts, intersection)
+        run(intervals, nets, ts, tls_name)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:
