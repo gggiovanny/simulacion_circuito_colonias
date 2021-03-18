@@ -20,8 +20,19 @@ class TrafficStorage:
     def collect(self, *args, **kwargs):
         self.__generateEdgesStateCache(*args, **kwargs)
 
-    def save(self):
-        # TODO: procesar los valores pertinentes: sacar promedios y poner rangos de tiempo
+    def save(self, simulation_time):
+        # TODO: crear un modelo de EdgeStateRange que indique en cada campo si es acumulado, promedio y que los rangos se tiempo sean campos separados: ej. start_time, end_time
+        for edge_name in self.in_edges_name:
+            prev = self.stateCache[edge_name]
+            # poner rangos de tiempo
+            self.stateCache[edge_name]['simulation_time'] = '{}-{}'.format(
+                prev['simulation_time'], simulation_time)
+            self.stateCache[edge_name]['time_formated'] = '{}-{}'.format(
+                prev['time_formated'], secondsToTime(simulation_time))
+            # promediando los campos pertinentes
+            campos_a_promediar = ('mean_speed', 'occupancy', 'noise_emission')
+            for key in campos_a_promediar:
+                self.stateCache[edge_name][key] = prev[key] / self.cache_count
         self.__storeStates()
         self.__initStateCache()
 

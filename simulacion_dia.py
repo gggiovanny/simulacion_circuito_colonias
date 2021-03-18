@@ -102,7 +102,7 @@ def run(intervals, nets, ts, tls_name):
         if estado_actual != estado_anterior:
             # guardar en la bd en cada inicio de ciclo del semaforo, de tal manera que los datos sean por ciclo
             if pn.isStartOfCycle(state=estado_actual):
-                ts.save()
+                ts.save(t)
             pn.stateChangeMsg(t, wait, estado_actual, estado_anterior, pn.getActiveNetName(nets))
             wait = 0
     traci.close()

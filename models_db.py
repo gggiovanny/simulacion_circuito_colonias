@@ -77,7 +77,7 @@ class Intersection(db.Entity):
         return self.name
 class EdgeState(db.Entity):
     name = Required(str)
-    simulation_time = Required(int)
+    simulation_time = Required(str)
     time_formated = Optional(str) 
     state_label = Optional(str) # identifica la condicion dada del estado (ej. mucho trafico, politica fija, etc.)
     active_net_name = Optional(str) 
