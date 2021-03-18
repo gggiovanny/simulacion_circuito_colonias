@@ -85,6 +85,19 @@ label_colors = {
     "Sin inicializar": ""
 }
 
+colors_that_starts_cycle = [
+    'demo state 3',
+    'default green',
+    'alt red',
+]
+
+def isStartOfCycle(state=None, label=None):
+    if label == None and state != None:
+        label = getStateLabel(state=state)
+    if label == None:
+        raise Exception('No se definió label o state.') 
+    return label in colors_that_starts_cycle
+
 
 def getStateLabel(state="", label=""):
     if label:
