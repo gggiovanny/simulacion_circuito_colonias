@@ -16,6 +16,8 @@ class TrafficStorage:
         self.__initIntersectionData(intersection_name)
         # creando cache del estado
         self.__initStateCache()
+        # callback que se ejecuta al guardar el estado
+        self.onSave = None
 
     def collect(self, *args, **kwargs):
         self.__generateEdgesStateCache(*args, **kwargs)
@@ -33,6 +35,8 @@ class TrafficStorage:
             campos_a_promediar = ('mean_speed', 'occupancy', 'noise_emission')
             for key in campos_a_promediar:
                 self.stateCache[edge_name][key] = prev[key] / self.cache_count
+        if self.onSave:
+            self.onSave(self.stateCache)
         self.__storeStates()
         self.__initStateCache()
 

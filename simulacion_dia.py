@@ -4,6 +4,7 @@ import petri_nets as pn
 import traffic_generator as tg
 import numpy as np
 from traffic_storage import TrafficStorage
+from traffic_balancer import TrafficBalancer 
 
 def generateTrafficSimDay(scale=1):
     """
@@ -111,8 +112,11 @@ def run(intervals, nets, ts, tls_name):
 if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
+    # instanciando balanceador de trafico
+    tb = TrafficBalancer()
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
     ts = TrafficStorage(traci, 'circuito_colonias')
+    ts.onSave = lambda data: tb.balance(data)
     tls_name = ts.intersection.associated_traffic_light_name
     # obteniendo las redes de petri que controlan los semaforos
     nets = {
