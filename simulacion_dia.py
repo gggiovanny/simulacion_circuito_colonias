@@ -113,7 +113,7 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # instanciando balanceador de trafico
-    tb = TrafficBalancer()
+    tb = TrafficBalancer(per_edge_base_wait=30, numedges=3)
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
     ts = TrafficStorage(traci, 'circuito_colonias')
     ts.onSave = lambda data: tb.balance(data)
