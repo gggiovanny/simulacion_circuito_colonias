@@ -1,6 +1,5 @@
 import lxml.etree as et
 import re
-from seaborn.utils import sig_stars
 import config
 import random
 from datetime import datetime, timedelta
