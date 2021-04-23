@@ -63,13 +63,15 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(intervals, nets, ts, tls_name):
+def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
     wait = 0
     estado_anterior = ''
     estado_actual = ''
+    ts.onSave = tb.balance
+    activenet = pn.generateDinamycNet(tls_name, [15, 25])
     # Ejecuta el bucle de control de TraCI
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(tls_name)
@@ -77,26 +79,11 @@ def run(intervals, nets, ts, tls_name):
         ts.collect(
             simulation_time=t,
             state_label=pn.getStateLabel(state=estado_actual),
-            active_net_name=pn.getActiveNetName(nets)
+            active_net_name=activenet.name
         )
         # avanzando la simulacion
         traci.simulationStep()
-        #? entre las 5:30 y las 8:30,  y entre las 18:30 y las 21:30, poner la
-        #? red pensada para más volumen de tráfico.
-        if intervals['5:30'] < t < intervals['8:30']:
-            pn.setActiveNet("in", nets)
-            nets["in"].nextStep(t)
-        elif intervals['18:30'] < t < intervals['21:30']:
-            pn.setActiveNet("out", nets)
-            nets["out"].nextStep(t)
-        #? entre las 12:30 y las 15:30, poner la  red pensada para trafico medio
-        elif intervals['12:30'] < t < intervals['15:30']:
-            pn.setActiveNet("inout", nets)
-            nets["inout"].nextStep(t)
-        #? en los otros intervalos, poner la red por defecto
-        else:
-            pn.setActiveNet("default", nets)
-            nets["default"].nextStep(t)
+        activenet.nextStep(t)
         t+=1
         wait+=1
         estado_actual = traci.trafficlight.getRedYellowGreenState(tls_name)
@@ -104,7 +91,7 @@ def run(intervals, nets, ts, tls_name):
             # guardar en la bd en cada inicio de ciclo del semaforo, de tal manera que los datos sean por ciclo
             if pn.isStartOfCycle(state=estado_actual):
                 ts.save(t)
-            pn.stateChangeMsg(t, wait, estado_actual, estado_anterior, pn.getActiveNetName(nets))
+            pn.stateChangeMsg(t, wait, estado_actual, estado_anterior, activenet.name)
             wait = 0
     traci.close()
 
@@ -113,21 +100,14 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # instanciando balanceador de trafico
-    tb = TrafficBalancer(per_edge_base_wait=30, numedges=3)
+    per_edge_base_wait = 30
+    tb = TrafficBalancer(per_edge_base_wait, numedges=3)
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
     ts = TrafficStorage(traci, 'circuito_colonias')
-    ts.onSave = lambda data: tb.balance(data)
     tls_name = ts.intersection.associated_traffic_light_name
-    # obteniendo las redes de petri que controlan los semaforos
-    nets = {
-        "out": pn.generateDemoTlsPetriNet(tls_name, name="Hight out traffic net"),
-        "in": pn.generateDualPetriNet(tls_name, name="High in traffic net"),
-        "inout": pn.generateDualPetriNet(tls_name, name="In and out traffic net", states_set="alt"),
-        "default": pn.generateDualPetriNet(tls_name, name="Default traffic net", states_set="alt"),
-    }
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(intervals, nets, ts, tls_name)
+        run(ts, tb, tls_name)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:

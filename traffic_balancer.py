@@ -13,6 +13,10 @@ class TrafficBalancer:
             totaltraffic += e['vehicle_number']
             result[e['name']] = {'count': e['vehicle_number']}
         for r in result.values():
-            r['percentage'] = r['count'] / totaltraffic
+            if totaltraffic == 0:
+                # si no hay nada de tráfico, repartir el porcentaje de trafico equitativamente entre las calles
+                r['percentage'] = 1 / self.numedges
+            else:
+                r['percentage'] = r['count'] / totaltraffic
             r['time'] = r['percentage'] * self.intersection_total_wait
         return result
