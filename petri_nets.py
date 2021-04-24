@@ -1,7 +1,7 @@
 import PetriPy as petri
 from config import traci
 from datetime import timedelta
-
+from typing import List
 
 def generateDemoTlsPetriNet(tls_name, name="Basic net"):
     # generando una lista de objetos Places() (Lugares) en una lista llamada 'places'
@@ -84,7 +84,7 @@ def generateDualPetriNet(tls_name, name="Dual net", states_set="default"):
     return petri.Network(p, t, initial_state, name=name)
 
 
-def generateDinamycNet(tls_name: str,  duraciones: list, yellow_time: int = 6, name: str = "Dinamyc Net"):
+def generateDinamycNet(tls_name: str,  duraciones: List[int], yellow_time: int = 6, name: str = "Dinamyc Net"):
     """
     Genera una red de petri de una estructura circular de tamaño fijo (para 4
     transiciones) a la que se le puede configurar el estado al que se cambia con
@@ -137,7 +137,7 @@ label_colors = {
 }
 
 colors_that_starts_cycle = [
-    'N_g-EW_r',
+    'N_y-EW_r',
     'default green',
     'alt red',
 ]

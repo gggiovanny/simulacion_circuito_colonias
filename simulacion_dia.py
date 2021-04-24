@@ -70,8 +70,17 @@ def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str):
     wait = 0
     estado_anterior = ''
     estado_actual = ''
-    ts.onSave = tb.balance
     activenet = pn.generateDinamycNet(tls_name, [15, 25])
+    def onSaveCallback(data):
+        nonlocal activenet # declarando que esta variable se va a usar del scope de afuera de esta funcion interna (es un closure)
+        result = tb.balance(data)
+        # cambiando los tiempos de la red activa dinamicamente
+        time_we = result['from_west']['time'] + result['from_east']['time'] # [0] controla la duracion del tiempo de green en las calles que vienen del este y oeste
+        time_n = result['from_north']['time'] # [1] controla la duracion del tiempo de green en las calles que vienes del norte
+        time_we = int(round(time_we)) # redondeando, porque los tiempos deben ser enteros, si no la red de Petri se buguea 
+        time_n = int(round(time_n)) # redondeando, porque los tiempos deben ser enteros, si no la red de Petri se buguea
+        activenet = pn.generateDinamycNet(tls_name, [time_we, time_n])
+    ts.onSave = onSaveCallback
     # Ejecuta el bucle de control de TraCI
     while traci.simulation.getMinExpectedNumber() > 0:
         estado_anterior = traci.trafficlight.getRedYellowGreenState(tls_name)
@@ -100,8 +109,7 @@ if __name__ == "__main__":
     # generando el tráfico para la simulación
     gen, intervals = generateTrafficSimDay(scale=0.1)
     # instanciando balanceador de trafico
-    per_edge_base_wait = 30
-    tb = TrafficBalancer(per_edge_base_wait, numedges=3)
+    tb = TrafficBalancer(per_edge_base_wait = 30, numedges=3, min_wait=5)
     # creando instancia de la clase TrafficStorage para operaciones de lectura y escritura de datos
     ts = TrafficStorage(traci, 'circuito_colonias')
     tls_name = ts.intersection.associated_traffic_light_name
