@@ -14,3 +14,4 @@ test.*
 /.history
 *.sqlite
 /__pycache__
+/*.txt

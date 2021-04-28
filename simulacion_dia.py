@@ -5,6 +5,7 @@ import traffic_generator as tg
 import numpy as np
 from traffic_storage import TrafficStorage
 from traffic_balancer import TrafficBalancer 
+import os
 
 def generateTrafficSimDay(scale=1):
     """
@@ -63,7 +64,7 @@ def generateTrafficSimDay(scale=1):
     
     return gen1, intervals
 
-def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str):
+def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str, shutdowntime = None):
     # iniciando la simulacion
     traci.start(['sumo-gui', "-c", config.sumo_data_path+'osm.sumocfg'])
     t = 0
@@ -82,7 +83,7 @@ def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str):
         activenet = pn.generateDinamycNet(tls_name, [time_we, time_n])
     ts.onSave = onSaveCallback
     # Ejecuta el bucle de control de TraCI
-    while traci.simulation.getMinExpectedNumber() > 0:
+    while traci.simulation.getMinExpectedNumber() > 0 and (t <= shutdowntime if shutdowntime else True ):
         estado_anterior = traci.trafficlight.getRedYellowGreenState(tls_name)
         # recorriendo todas las calles y generando el estado de cada una
         ts.collect(
@@ -115,8 +116,14 @@ if __name__ == "__main__":
     tls_name = ts.intersection.associated_traffic_light_name
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(ts, tb, tls_name)
+        run(ts, tb, tls_name, shutdowntime=100)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:
         gen.restoreOldTrafficFilename()
+        
+    # calcular rendimiento usando los datos guardados
+    perfdata = ts.getPerformanceData()
+    # escribiendolo en un archivo
+    with open(ts.instance_name+'.txt', "w") as logperformance:
+        print('Tiempo de espera acumulado: {}'.format(perfdata), file=logperformance)

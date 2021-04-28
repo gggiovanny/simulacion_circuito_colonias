@@ -94,12 +94,9 @@ class EdgeState(db.Entity):
     def __str__(self):
             return self.name
 
-def connect(in_memory_database = True):
+def connect(cache_name = 'cache', ):
     # conectando a la base de datos
-    if in_memory_database:
-        db.bind(provider='sqlite', filename=':memory:') # in memory database
-    else:
-        db.bind(provider='sqlite', filename='cache.sqlite', create_db=True) # file database
+    db.bind(provider='sqlite', filename='{}.sqlite'.format(cache_name), create_db=True) # file database
     # mapeando modelos a la base de datos
     db.generate_mapping(create_tables=True)
 

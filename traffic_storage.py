@@ -1,14 +1,17 @@
 from models_db import *
 from pony.orm import db_session
 from traffic_generator import secondsToTime
+import time
 
 
 class TrafficStorage:
     def __init__(self, traci, intersection_name):
         # instancia de traci
         self.traci = traci
+        # generando nombre de instancia
+        self.instance_name = self.__generateInstanceName()
         # conectando a la base de datos
-        connect(False)
+        connect(self.instance_name)
         # de manera dinaminca, si no existe en la bd la interseccion de circuito colonias, crearla
         if not self.__existsIntersection("circuito_colonias"):
             self.__create_cinco_colonias_intersection()
@@ -40,9 +43,16 @@ class TrafficStorage:
         self.__storeStates()
         self.__initStateCache()
 
+    @db_session
+    def getPerformanceData(self):
+        return select(e.waiting_time for e in EdgeState).sum()
+
     def __initStateCache(self):
         self.stateCache = {}
         self.cache_count = 0
+
+    def __generateInstanceName(self):
+        return time.strftime("%Y%m%d_%H%M%S")
 
     def __generateEdgesStateCache(self, simulation_time, state_label='', active_net_name=''):
         self.cache_count += 1
