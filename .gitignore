@@ -15,3 +15,4 @@ test.*
 *.sqlite
 /__pycache__
 /*.txt
+!/performance_log.csv

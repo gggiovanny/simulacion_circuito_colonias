@@ -104,6 +104,7 @@ def run(ts: TrafficStorage, tb: TrafficBalancer, tls_name: str, shutdowntime = N
             pn.stateChangeMsg(t, wait, estado_actual, estado_anterior, activenet.name)
             wait = 0
     traci.close()
+    return t
 
 # este es el punto de entrada al script
 if __name__ == "__main__":
@@ -116,14 +117,14 @@ if __name__ == "__main__":
     tls_name = ts.intersection.associated_traffic_light_name
     # ejecutando la funcion que controla a la simulacion
     try:
-        run(ts, tb, tls_name, shutdowntime=100)
+        time_elapsed  = run(ts, tb, tls_name, shutdowntime=300)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:
         gen.restoreOldTrafficFilename()
         
     # calcular rendimiento usando los datos guardados
-    perfdata = ts.getPerformanceData()
-    # escribiendolo en un archivo
-    with open(ts.instance_name+'.txt', "w") as logperformance:
-        print('Tiempo de espera acumulado: {}'.format(perfdata), file=logperformance)
+    waiting_time_accumulated = ts.getPerformanceData()
+    # escribiendolos en un archivo csv
+    with open('performance_log.csv', "a") as performancelog:
+        print('{},{},{}'.format(ts.instance_name,time_elapsed ,waiting_time_accumulated), file=performancelog)
