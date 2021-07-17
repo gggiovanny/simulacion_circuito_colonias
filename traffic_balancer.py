@@ -6,7 +6,6 @@ class TrafficBalancer:
         self.max_wait = max_wait
         self.numedges = numedges
         self.intersection_total_wait = per_edge_base_wait * numedges
-        pass
 
     def balance(self, edgeState):
         totaltraffic = 0
@@ -23,8 +22,13 @@ class TrafficBalancer:
                 r['percentage'] = r['count'] / totaltraffic
             # calculando cuanto tiempo representa ese porcentaje
             r['time'] = r['percentage'] * self.intersection_total_wait
+            # verificando que el tiempo esté entre el tiempo máximo y mínimo
             if r['time'] < self.min_wait:
                 r['time'] = self.min_wait
             if r['time'] > self.max_wait:
                 r['time'] = self.max_wait
+            # redondeando el tiempo a enteros, porque la simulación así lo
+            # maneja y si no puede ocasionar bugs en la red de Petri porque por
+            # ejemplo 3.0001 nunca será igual a 3
+            r['time'] = int(round(r['time']))
         return result
