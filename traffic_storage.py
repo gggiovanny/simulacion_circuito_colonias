@@ -38,6 +38,9 @@ class TrafficStorage:
             campos_a_promediar = ('mean_speed', 'occupancy', 'noise_emission')
             for key in campos_a_promediar:
                 self.stateCache[edge_name][key] = prev[key] / self.cache_count
+            # calculando el waiting_time total
+            self.stateCache[edge_name]['waiting_time'] = prev['waiting_time'] + \
+                sum(prev['waiting_time_peak_values'])
         if self.onSave:
             self.onSave(self.stateCache)
         self.__storeStates()
@@ -57,8 +60,18 @@ class TrafficStorage:
     def __generateEdgesStateCache(self, simulation_time, state_label='', active_net_name=''):
         self.cache_count += 1
         for edge_name in self.in_edges_name:
+            current_waiting_time = self.traci.edge.getWaitingTime(edge_name)
             if edge_name in self.stateCache:
                 prev = self.stateCache[edge_name]
+
+                accumulated_waiting_time, waiting_time_peak_values = self.__accumulatePeakValue(
+                    accumulator=prev['waiting_time'],
+                    prevValue=prev['waiting_time_prev_value'],
+                    currentValue=current_waiting_time,
+                    peakValues=prev['waiting_time_peak_values'],
+                    edge_name=edge_name
+                )
+
                 self.stateCache[edge_name] = {
                     'name': prev['name'],  # mantener primero agregado
                     # mantener primero agregado
@@ -71,8 +84,12 @@ class TrafficStorage:
                     'vehicle_number': prev['vehicle_number'] + self.traci.edge.getLastStepVehicleNumber(edge_name),
                     # promedio
                     'mean_speed': prev['mean_speed'] + self.traci.edge.getLastStepMeanSpeed(edge_name),
-                    # suma
-                    'waiting_time': prev['waiting_time'] + self.traci.edge.getWaitingTime(edge_name),
+                    # acumular el valor pico
+                    'waiting_time': accumulated_waiting_time,
+                    # valor temporal para 'waiting_time'
+                    'waiting_time_prev_value': current_waiting_time,
+                    # valor temporal para 'waiting_time'
+                    'waiting_time_peak_values': waiting_time_peak_values,
                     # promedio
                     'occupancy': prev['occupancy'] + self.traci.edge.getLastStepOccupancy(edge_name),
                     # suma
@@ -95,7 +112,9 @@ class TrafficStorage:
                     'active_net_name': active_net_name,
                     'vehicle_number': self.traci.edge.getLastStepVehicleNumber(edge_name),
                     'mean_speed': self.traci.edge.getLastStepMeanSpeed(edge_name),
-                    'waiting_time': self.traci.edge.getWaitingTime(edge_name),
+                    'waiting_time': current_waiting_time,
+                    'waiting_time_prev_value': current_waiting_time,
+                    'waiting_time_peak_values': [],
                     'occupancy': self.traci.edge.getLastStepOccupancy(edge_name),
                     'travel_time': self.traci.edge.getTraveltime(edge_name),
                     'co2_emission': self.traci.edge.getCO2Emission(edge_name),
@@ -107,10 +126,30 @@ class TrafficStorage:
     def __concatIfchanges(self, oldvalue, newvalue):
         return oldvalue if newvalue in oldvalue else '{}|{}'.format(oldvalue, newvalue)
 
+    # reducer function, always return the new value of the accumulator
+    def __accumulatePeakValue(self, *, accumulator, prevValue, currentValue, peakValues, edge_name):
+        returnAccumulator = accumulator
+        returnPeakValues = peakValues
+
+        # cuando currentValue era 0 y empieza a aumentar
+        if currentValue > 0 and prevValue == 0 and accumulator > 0:
+            returnPeakValues.append(accumulator)
+            returnAccumulator = max(prevValue, currentValue)
+        else:
+            returnAccumulator = max(accumulator, currentValue)
+
+        return returnAccumulator, returnPeakValues
+
+    def removeTempValues(self, d):
+        r = dict(d)
+        del r['waiting_time_prev_value']
+        del r['waiting_time_peak_values']
+        return r
+
     @db_session
     def __storeStates(self):
         for name, data in self.stateCache.items():
-            EdgeState(**data)
+            EdgeState(**self.removeTempValues(data))
 
     @db_session
     def __initIntersectionData(self, name):
