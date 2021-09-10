@@ -16,3 +16,4 @@ test.*
 /__pycache__
 /*.txt
 !/performance_log.csv
+*.sqlite-journal

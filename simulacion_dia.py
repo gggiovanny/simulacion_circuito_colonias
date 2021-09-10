@@ -116,8 +116,9 @@ if __name__ == "__main__":
     ts = TrafficStorage(traci, 'circuito_colonias')
     tls_name = ts.intersection.associated_traffic_light_name
     # ejecutando la funcion que controla a la simulacion
+    time_elapsed = 0
     try:
-        time_elapsed  = run(ts, tb, tls_name, shutdowntime=300)
+        time_elapsed  = run(ts, tb, tls_name)
     except traci.exceptions.FatalTraCIError:
         print('Conexión con traci cerrada por SUMO. Problemente la simulación se detuvo antes de finalizar.')
     finally:
@@ -127,4 +128,4 @@ if __name__ == "__main__":
     waiting_time_accumulated = ts.getPerformanceData()
     # escribiendolos en un archivo csv
     with open('performance_log.csv', "a") as performancelog:
-        print('{},{},{}'.format(ts.instance_name,time_elapsed ,waiting_time_accumulated), file=performancelog)
+        print('{},{},{}'.format(ts.instance_name, time_elapsed, waiting_time_accumulated), file=performancelog)
